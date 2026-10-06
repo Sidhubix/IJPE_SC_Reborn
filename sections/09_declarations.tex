@@ -1,9 +1,31 @@
-% Rapatrié depuis le doc de travail (onglet Article FR), révision 144.
+% Déclarations finales : disponibilité des données, usage de l'IA générative, financement.
 
 \section*{Disponibilité des données}
 
-[La base de scénarios et le générateur seront déposés dans un entrepôt public ; lien et DOI à ajouter, anonymisés pour l'évaluation.]
+Les données et le code qui permettent de reproduire les résultats sont déposés dans des entrepôts publics, conformément à la politique de données de la revue. Les bases de scénarios des lots A et B, les fichiers d'hypothèses et de configuration, les trajectoires, les paramètres ajustés, la base d'apprentissage, les contraintes structurelles et le réseau bayésien appris sont déposés sur Mendeley Data [DOI à ajouter]. Le générateur Isomorph-Reborn est diffusé en code ouvert, avec son manuel d'utilisation, dans une version archivée [DOI Zenodo à ajouter]. L'outil BayesArtist, utilisé pour l'apprentissage et l'inférence, n'est pas diffusé ; l'apprentissage du réseau peut toutefois être reproduit avec tout logiciel de réseaux bayésiens qui apprend la structure et les paramètres à partir d'un fichier CSV et accepte des arcs interdits, par exemple Hugin, GeNIe (BayesFusion), le paquet R bnlearn ou la bibliothèque Python pgmpy. Les algorithmes de recherche disponibles différant d'un outil à l'autre, de légers écarts de structure sont possibles. Un matériel supplémentaire détaille les compléments de modélisation retirés du texte principal.
+
+% ---------------------------------------------------------------------
+% LISTE DE SUIVI DES DÉPÔTS (à retirer avant la soumission)
+% ---------------------------------------------------------------------
+\noindent\fbox{\parbox{0.96\textwidth}{\footnotesize
+\textbf{Liste de suivi des dépôts (à retirer avant la soumission).} La politique de données d'IJPE (option C) impose le dépôt des données dans un entrepôt et une déclaration de disponibilité dès la soumission ; les fichiers supplémentaires doivent être téléversés avec le manuscrit, chacun avec une légende courte, et ne peuvent plus être ajoutés qu'à l'étape de révision.
+\begin{itemize}[leftmargin=1.2em, itemsep=1pt]
+\item[$\square$] \textbf{Mendeley Data} : créer le jeu de données avec, pour chaque lot (A : réseau ISOMORPH, tension 75, 2 000 scénarios ; B : réseau paramétrique, 500 scénarios) : \texttt{hypotheses\_lot\_A\_isomorph\_tension75.json}, \texttt{hypotheses\_lot\_B\_parametrique\_tension75.json}, \texttt{reseau\_isomorph-originel.json}, \texttt{ip\_timeseries.csv}, \texttt{resilience\_ip.csv}, les fichiers de scénarios, de perturbations et de décisions, la base \texttt{rb\_training\_42\_*.csv}, \texttt{bayesartist\_apprentissage\_lotA.csv}, \texttt{bayesartist\_contraintes\_isomorph.json} et le réseau appris au format \texttt{.bif}.
+\item[$\square$] Rédiger le README du jeu de données : contenu de chaque fichier, signification des colonnes, graine et configuration de génération, correspondance avec les tableaux et figures de l'article.
+\item[$\square$] Choisir la licence des données (CC-BY 4.0 conseillée) ; garder le jeu de données privé pendant l'évaluation et générer le lien de partage réservé aux relecteurs.
+\item[$\square$] \textbf{Isomorph-Reborn} : publier le code sur GitHub avec une licence (MIT conseillée), le manuel d'utilisation et un README d'installation ; créer une version figée et l'archiver sur Zenodo pour obtenir un DOI.
+\item[$\square$] Vérifier que le manuel d'utilisation est à jour (correctif de la représentation temporelle) et qu'il décrit les manœuvres citées dans les consignes de reproductibilité des figures.
+\item[$\square$] Pour l'évaluation anonyme : fournir un lien anonymisé vers le code (par exemple anonymous.4open.science) ou une archive jointe réservée aux relecteurs.
+\item[$\square$] \textbf{BayesArtist} : non diffusé ; vérifier que la base CSV et le fichier de contraintes suffisent à reproduire l'apprentissage dans un outil tiers (essai conseillé avec bnlearn ou pgmpy).
+\item[$\square$] \textbf{Matériel supplémentaire} : compiler \texttt{sc\_reborn\_supplementaire.tex}, rédiger sa légende, le téléverser avec le manuscrit.
+\item[$\square$] Remplacer les mentions [DOI à ajouter] ci-dessus et citer les deux DOI dans la bibliographie (format logiciel : auteurs, titre, version, entrepôt, DOI).
+\item[$\square$] Renseigner la déclaration de disponibilité des données dans le formulaire de soumission.
+\end{itemize}}}
 
 \section*{Déclaration d'usage de l'IA générative}
 
-Pendant la préparation de ce travail, les auteurs ont utilisé Claude (Anthropic) pour rédiger et structurer une partie du texte. Google AI Studio a été utilisé pour appuyer le développement des deux applications BayesArtist et Isomorph-Reborn. Après usage de ces outils, les auteurs ont relu et modifié le contenu autant que nécessaire, ils ont vérifié durant et après le développement des applications pour confirmer la correspondance exacte avec le cahier des charges et les descriptions donnés dans le présent papier. Les auteurs assument ainsi l'entière responsabilité du contenu de l'article. 
+Pendant la préparation de ce travail, les auteurs ont utilisé Claude (Anthropic) pour rédiger et structurer une partie du texte. Google AI Studio a été utilisé pour appuyer le développement des deux applications BayesArtist et Isomorph-Reborn. Après usage de ces outils, les auteurs ont relu et modifié le contenu autant que nécessaire, ils ont vérifié durant et après le développement des applications pour confirmer la correspondance exacte avec le cahier des charges et les descriptions donnés dans le présent papier. Les auteurs assument ainsi l'entière responsabilité du contenu de l'article.
+
+\section*{Financement}
+
+Ces travaux ont été réalisés dans le cadre du projet SC-Reborn, \og La logistique reconfigurable et résiliente \fg{} (ANR-AAPG2021), financé par l'Agence nationale de la recherche (ANR), France.

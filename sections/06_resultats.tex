@@ -105,7 +105,7 @@ Le réseau est appris sur 1 600 scénarios, soit 6 400 versions de crise, et év
 \captionof{figure}{Réseau bayésien appris sous contraintes, variables colorées par palier de l'ordre temporel d'une crise : contexte, politique, réponse, mécanisme et résilience.}\label{fig:d6}
 \end{center}
 
-\textit{Reproductibilité.} Dans BayesArtist, importer la base \texttt{bayesartist\_apprentissage\_lotA.csv} (6 400 versions de crise, 20 variables) et les contraintes \texttt{bayesartist\_contraintes\_isomorph.json} (155 arcs interdits, quatre parents au plus), puis lancer l'apprentissage par recherche gloutonne (\textit{Greedy Hill Climbing}) au score BIC avec lissage de Laplace. Le réseau appris s'exporte au format \texttt{.bif} ; la figure est tracée à partir de ce fichier.
+\textit{Reproductibilité.} Dans BayesArtist, importer la base \texttt{bayesartist\_apprentissage\_lotA.csv} (6 400 versions de crise, 20 variables) et les contraintes \texttt{bayesartist\_contraintes\_isomorph.json} (155 arcs interdits, quatre parents au plus), puis lancer l'apprentissage par recherche gloutonne (\textit{Greedy Hill Climbing}) au score BIC avec lissage de Laplace. Le réseau appris s'exporte au format \texttt{.bif} ; la figure est tracée à partir de ce fichier. BayesArtist n'étant pas diffusé, le même apprentissage peut être conduit avec tout logiciel de réseaux bayésiens qui apprend à partir d'un fichier CSV et accepte des arcs interdits (voir la section Disponibilité des données).
 
 \begin{table*}[htbp]
 \caption{Pronostic de la classe de perte cumulée sur les crises de test.}
