@@ -37,7 +37,7 @@
 % Champs restant à compléter avant la soumission (en bleu)
 \newcommand{\acompleter}[1]{\textcolor{blue}{#1}}
 
-% Mettre \anonymetrue pour la version soumise en double aveugle (masque la déclaration CRediT).
+% Mettre \anonymetrue pour la version soumise en double aveugle (masque auteurs, affiliations, CRediT et financement).
 \newif\ifanonyme
 \anonymefalse
 
@@ -49,14 +49,38 @@
 \def\textpagefraction{.001}
 
 \shorttitle{Résilience des réseaux logistiques : simuler, mesurer, apprendre}
-\shortauthors{Auteurs anonymisés}
+\ifanonyme\shortauthors{Auteurs anonymisés}\else\shortauthors{N. Rahiel et al.}\fi
 
 \title [mode = title]{\ArticleTitle}
 
+\ifanonyme
 \author[1]{\acompleter{Auteurs anonymisés pour l'évaluation}}
-
 \affiliation[1]{organization={\acompleter{Anonymisé}},
             country={France}}
+\else
+\author[1]{Naïma Rahiel}
+\author[1]{Sid-Ali Addouche}
+\cormark[1]
+\author[1]{El Mouloudi Dafaoui}
+\author[1]{Abderrahman El Mhamedi}
+\author[2,3]{Saïd Amari}
+\author[4]{Agnès Letouzey}
+\author[4]{Xavier Desforges}
+\author[4]{Kamal Medjaher}
+\affiliation[1]{organization={Laboratoire QUARTZ, IUT de Montreuil, Université Paris 8},
+            city={Montreuil},
+            country={France}}
+\affiliation[2]{organization={LURPA, ENS Paris-Saclay},
+            city={Gif-sur-Yvette},
+            country={France}}
+\affiliation[3]{organization={LIPN, Université Sorbonne Paris Nord},
+            city={Villetaneuse},
+            country={France}}
+\affiliation[4]{organization={LGP, Université de Toulouse, UTTOP},
+            city={Tarbes},
+            country={France}}
+\cortext[1]{Auteur correspondant}
+\fi
 
 \begin{abstract}
 La résilience d'une chaîne logistique dépend autant de la réaction des gestionnaires que de la perturbation elle-même. Pourtant, aucune base de données ne relie une perturbation, les décisions prises et la trajectoire de performance qui en résulte. Nous proposons une démarche en trois étapes. Premièrement, un réseau logistique multi-échelon est soumis à des perturbations maîtrisées de cinq natures, tandis qu'un gestionnaire simulé détecte la dégradation, décide et escalade parmi neuf leviers ; chaque crise est rejouée sans réaction et sous trois profils de gestionnaire, de sorte que les écarts de performance sont attribuables à la seule gestion. Deuxièmement, chaque trajectoire de service est résumée par une courbe de résilience hyperbolique composée, dont six indicateurs sont déduits analytiquement. Troisièmement, un réseau bayésien causal, dont la structure suit l'ordre temporel d'une crise et traite la politique de gestion comme une intervention, en tire pronostic, diagnostic et préconisation. Sur 2 000 crises simulées sur le réseau d'un jumeau numérique ouvert, la réaction agit sur la durée de la crise plutôt que sur sa profondeur : la politique la plus réactive évite 73 \% du service perdu, contre 18 \% et 14 \% pour les politiques prudente et tardive. Chaque levier qu'elle engage préserve en moyenne un tiers de journée de ventes, alors que la politique prudente est économiquement dominée. Le réseau appris préconise, lorsque la durée du choc est connue, une politique plus sobre dans environ une crise sur sept sans perte notable de résilience.
