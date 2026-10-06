@@ -34,6 +34,10 @@
 \pgfplotsset{compat=1.17}
 \newcolumntype{L}{>{\raggedright\arraybackslash}X}
 
+% Mettre \anonymetrue pour la version soumise en double aveugle (masque la déclaration CRediT).
+\newif\ifanonyme
+\anonymefalse
+
 \input{sections/00_front}
 
 \begin{document}
@@ -74,6 +78,7 @@ La résilience d'une chaîne logistique dépend autant de la réaction des gesti
 \input{sections/07_discussion}
 \input{sections/08_conclusion}
 \input{sections/09_declarations}
+\input{sections/10_credit}
 
 \bibliographystyle{cas-model2-names}
 \bibliography{references}
