@@ -177,3 +177,35 @@ La représentation temporelle permet d'étudier le rôle des stocks, que la base
 Trois comportements se dégagent. Pour les ruptures de distribution, coupure de lien, fermeture d'un site de stockage et congestion, la couverture agit comme un levier de robustesse progressif : plus elle est faible, plus les crises visibles sont nombreuses, de 11 à 43 sur 60 pour une coupure de lien et de 27 à 59 pour une congestion. La frontière entre robustesse et résilience évoquée en section 4.4 se déplace donc de manière contrôlée avec le niveau de stock. Les pannes fournisseur sont au contraire absorbées dès que la couverture atteint un quart de jour, y compris pour des pannes de 15 à 60 jours à la couverture par défaut : la calibration de la demande borne le manque à servir pendant une panne, que quelques jours de stock suffisent à compenser. Enfin, le pic de demande est mieux absorbé sans stocks qu'avec : dans la représentation par flux, toute marge de capacité sert instantanément le surcroît de demande, alors qu'avec des délais, ce surcroît doit d'abord être prélevé sur des stocks dimensionnés sur le débit nominal, que le recomplètement ne reconstitue qu'après un délai.
 
 La couverture de stock n'est donc pas un levier universel de résilience. Elle protège contre les pertes de capacité de distribution, est presque superflue contre une défaillance amont de faible ampleur, et ne protège pas contre un choc de demande, qui appelle des leviers de capacité ou de demande. Ces résultats, obtenus sans réaction du gestionnaire et à couverture uniforme, n'épuisent pas la question : l'interaction entre couverture et politique de gestion reste à étudier (section 7.3).
+
+\subsection{Lecture économique des politiques de gestion}
+\label{sec:6.6}
+
+La perte cumulée se traduit directement en ventes perdues : multipliée par la demande journalière de référence, la part de service non rendue pendant les 60 jours qui suivent le choc donne un volume d'unités non livrées. Une crise sans réaction coûte en moyenne 25 550 unités (21 000 en médiane), soit environ 1,4 jour de demande. Chaque politique en évite une partie, au prix des leviers qu'elle engage. Le modèle ne valorisant pas ces leviers, nous en exprimons le coût $c$ par engagement en unités de marge $m$ : une politique est rentable tant que les ventes préservées, multipliées par $m$, couvrent le coût des leviers engagés. Le rapport $c/m$ au-delà duquel ce n'est plus le cas constitue son seuil de rentabilité (tableau~\ref{tab:eco}).
+
+\begin{table*}[htbp]
+\caption{Ventes préservées, leviers engagés et seuil de rentabilité par politique (moyennes sur les 2 000 crises de la base principale). Le seuil est le coût maximal d'un levier, exprimé en unités de marge, pour que la politique reste rentable ; le gain marginal rapporte le surcroît de ventes préservées au surcroît de leviers par rapport à la politique de la ligne précédente.}
+\label{tab:eco}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}LLLLLL@{}}
+\toprule
+\textbf{Politique} & \textbf{Ventes perdues par crise (unités)} & \textbf{Ventes préservées par crise (unités ; part)} & \textbf{Leviers engagés par crise} & \textbf{Seuil de rentabilité par levier ($c/m$)} & \textbf{Gain marginal par levier supplémentaire} \\
+\midrule
+Sans réaction & 25 550 & référence & 0 & sans objet & sans objet \\
+Tardif & 22 020 & 3 530 ; 14~\% & 0,67 & 5 300 & 5 300 \\
+Prudent & 20 980 & 4 570 ; 18~\% & 1,97 & 2 320 & 790 \\
+Réactif & 7 000 & 18 550 ; 73~\% & 2,80 & 6 630 & 16 940 \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+Trois enseignements s'en dégagent. D'abord, la politique réactive est à la fois la plus efficace et la plus rentable par levier : chacun de ses leviers préserve en moyenne 6 630 unités, soit environ un tiers de journée de demande. Pour une marge de 10 euros par unité, elle reste rentable tant qu'un levier coûte moins de 66 000 euros par crise. Ensuite, la politique prudente est économiquement dominée : elle engage plus des deux tiers des leviers de la politique réactive pour un quart de ses gains, et chaque levier qu'elle ajoute à la politique tardive ne préserve que 790 unités. Le coût d'une politique tient donc moins au nombre de leviers qu'à leur moment d'engagement : engagés tôt, ils évitent l'allongement de la crise ; engagés tard ou dans le mauvais ordre, ils arrivent quand l'essentiel de la perte est consommé. Enfin, la rentabilité dépend de la nature du choc : le seuil de la politique réactive atteint 13 100 unités par levier pour une panne fournisseur, mais seulement 2 300 pour une congestion, que des leviers globaux atténuent mal.
+
+\begin{center}
+\input{figures/tikz/fig_economie}
+\captionof{figure}{Bénéfice net moyen par crise de chaque politique, en milliers d'unités de marge, selon le coût d'un levier engagé. La courbe verte choisit, pour chaque crise, la politique au meilleur bénéfice : son écart avec la meilleure politique fixe mesure la valeur d'une préconisation adaptée à la crise.}\label{fig:eco}
+\end{center}
+
+\textit{Reproductibilité.} Les ventes perdues sont calculées à partir du fichier \texttt{ip\_timeseries.csv} du lot A, comme la somme de $1 - \mathrm{IP}(t)$ sur les 60 jours suivant le choc multipliée par la demande de référence ; le nombre de leviers engagés et la demande de référence proviennent de la base d'apprentissage exportée pour le même lot (colonnes \texttt{nb\_decisions} et \texttt{base\_demand}).
+
+La figure~\ref{fig:eco} en tire la conséquence pour le choix d'une politique. Parmi les politiques fixes, la réactivité est optimale tant que le coût d'un levier reste sous le seuil de 6 630 unités de marge ; au-delà, mieux vaut ne pas réagir, et les politiques prudente et tardive ne sont jamais le meilleur choix. Choisir la politique crise par crise, en revanche, conserve un bénéfice positif bien au-delà de ce seuil. Pour un levier valant 5 000 unités de marge, ce choix adapté porte le bénéfice moyen de 4 560 à 8 350 unités par crise, soit 83~\% de plus que la meilleure politique fixe ; pour un levier plus coûteux, il reste le seul à dégager un gain. C'est la valeur économique que vise la préconisation du réseau bayésien (section~\ref{sec:6.3}) : identifier, à partir de ce que l'on sait de la crise, celles où une politique plus sobre suffit.
