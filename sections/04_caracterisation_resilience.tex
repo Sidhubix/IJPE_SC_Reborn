@@ -51,9 +51,11 @@ L(\theta) = \sum_{i} 2\left(\sqrt{1 + \frac{r_i^2}{f^2}} - 1\right), \qquad r_i 
 Ce choix répond à une caractéristique des crises logistiques : la phase de reprise est rarement monotone. Rebonds, oscillations et à-coups liés à l'engagement successif des leviers ne peuvent être reproduits par une courbe à une seule chute. Le critère robuste en limite l'influence et oriente l'ajustement vers la profondeur et la largeur du creux, qui portent l'essentiel de l'information sur la résilience. Le critère n'étant pas convexe, l'estimation part de plusieurs points initiaux construits à partir de la trajectoire observée (niveau avant crise, minimum atteint, niveau final) et retient la meilleure solution (Fig.~\ref{fig:d4}).
 
 \begin{center}
-\fbox{\parbox{0.92\textwidth}{\footnotesize [FIGURE À INSÉRER. Source : Isomorph-Reborn, onglet « Ajustement par lot » ou visualisation de la courbe de résilience, scénario S0366, branche « Aucune décision » (coefficient de détermination 0,97). Contenu attendu : points journaliers observés et courbe ajustée continue. Annotations à ajouter : niveau initial $k$, profondeur $h$ (flèche verticale), décalage $g$, durée du palier $d$ (flèche horizontale), pentes $\alpha$ à la chute et $\beta$ à la reprise, écart final $q$ ; surface grisée entre le niveau initial et la courbe pour représenter la perte cumulée IPC. Les annotations peuvent être ajoutées à la main sur la capture, ou Claude peut produire la figure annotée à partir des fichiers \texttt{ip\_timeseries.csv} et \texttt{resilience\_ip.csv} du lot A.]}}
+\input{figures/tikz/fig_ajustement_S0366}
 \captionof{figure}{Trajectoire observée et courbe ajustée pour la crise de la figure~\ref{fig:d3}, en l'absence de réaction, avec la lecture des paramètres.}\label{fig:d4}
 \end{center}
+
+\textit{Reproductibilité.} Les paramètres ajustés de chaque version de crise sont exportés par Isomorph-Reborn (onglet « Ajustement par lot ») dans le fichier \texttt{resilience\_ip.csv} (colonnes \texttt{k}, \texttt{q}, \texttt{h}, \texttt{g}, \texttt{d}, \texttt{alpha}, \texttt{beta}, \texttt{r2}, puis les six indicateurs). La courbe tracée est l'équation~\eqref{eq:5} évaluée avec les paramètres de la ligne S0366, version \texttt{none}, superposée à la trajectoire du fichier \texttt{ip\_timeseries.csv}.
 
 \subsection{Définition des six indicateurs de résilience}
 \label{sec:4.3}

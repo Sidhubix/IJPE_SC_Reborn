@@ -1,0 +1,38 @@
+% Figure : pronostic de la perte cumulée selon la politique (inférence sur le réseau appris)
+% Évidences : nature = fermeture_entrepot, cible = passage_oblige, duree = fort.
+% Probabilités calculées par inférence exacte sur le fichier .bif exporté par BayesArtist.
+\begin{tikzpicture}[x=1cm,y=1cm, font=\scriptsize]
+  \node[anchor=east] at (-0.15,0.00) {Réactif};
+  \fill[palmec!75] (0.000,-0.30) rectangle (10.774,0.30);
+  \node at (5.387,0.00) {90~\%};
+  \fill[poltard!75] (10.774,-0.30) rectangle (11.887,0.30);
+  \node at (11.330,0.00) {9~\%};
+  \fill[polprud!75] (11.887,-0.30) rectangle (12.000,0.30);
+  \node[anchor=east] at (-0.15,-0.90) {Prudent};
+  \fill[palmec!75] (0.000,-1.20) rectangle (1.405,-0.60);
+  \node at (0.702,-0.90) {12~\%};
+  \fill[poltard!75] (1.405,-1.20) rectangle (6.736,-0.60);
+  \node at (4.070,-0.90) {44~\%};
+  \fill[polprud!75] (6.736,-1.20) rectangle (12.000,-0.60);
+  \node at (9.368,-0.90) {44~\%};
+  \node[anchor=east] at (-0.15,-1.80) {Tardif};
+  \fill[palmec!75] (0.000,-2.10) rectangle (1.087,-1.50);
+  \node at (0.543,-1.80) {9~\%};
+  \fill[poltard!75] (1.087,-2.10) rectangle (5.343,-1.50);
+  \node at (3.215,-1.80) {35~\%};
+  \fill[polprud!75] (5.343,-2.10) rectangle (12.000,-1.50);
+  \node at (8.671,-1.80) {55~\%};
+  \node[anchor=east] at (-0.15,-2.70) {Sans réaction};
+  \fill[palmec!75] (0.000,-3.00) rectangle (0.848,-2.40);
+  \node at (0.424,-2.70) {7~\%};
+  \fill[poltard!75] (0.848,-3.00) rectangle (3.697,-2.40);
+  \node at (2.273,-2.70) {24~\%};
+  \fill[polprud!75] (3.697,-3.00) rectangle (12.000,-2.40);
+  \node at (7.849,-2.70) {69~\%};
+  \draw[black!50] (0,-3.15) -- (12.0,-3.15);
+  \foreach \p in {0,20,40,60,80,100} { \draw[black!50] (\p*0.12,-3.15) -- ++(0,-0.08) node[below] {\p}; }
+  \node[font=\small] at (6.0,-3.90) {Probabilité de chaque classe de perte cumulée IPC (\%)};
+  \fill[palmec!75] (1.20,0.55) rectangle (1.55,0.8); \node[anchor=west] at (1.60,0.675) {Perte faible};
+  \fill[poltard!75] (4.60,0.55) rectangle (4.95,0.8); \node[anchor=west] at (5.00,0.675) {Perte moyenne};
+  \fill[polprud!75] (8.00,0.55) rectangle (8.35,0.8); \node[anchor=west] at (8.40,0.675) {Perte forte};
+\end{tikzpicture}

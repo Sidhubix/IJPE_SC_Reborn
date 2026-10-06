@@ -101,9 +101,11 @@ Pour vérifier que ces résultats ne tiennent pas à la seule topologie d'ISOMOR
 Le réseau est appris sur 1 600 scénarios, soit 6 400 versions de crise, et évalué sur les 400 restants (section~\ref{sec:5.4}). La structure obtenue (Fig.~\ref{fig:d6}) compte 41 arcs, sans aucun arc contraire à l'ordre des paliers, et retrouve le mécanisme principal de la section~\ref{sec:6.2} : la perte cumulée dépend directement de la politique, de la profondeur $h$ et de la durée $d$ du palier dégradé, et cette durée dépend à son tour de la politique, de la durée de la perturbation et du délai de réaction. La politique agit donc sur la durée de la crise plutôt que sur sa profondeur. La nature de la perturbation conditionne les familles de leviers mobilisées ; la part des articles critiques reste isolée dans la plage étudiée.
 
 \begin{center}
-\fbox{\parbox{0.92\textwidth}{\footnotesize [FIGURE À INSÉRER. Source : BayesArtist, apprentissage du fichier \texttt{bayesartist\_apprentissage\_lotA.csv} avec les contraintes \texttt{bayesartist\_contraintes\_isomorph.json} (Greedy Hill Climbing, score BIC, lissage de Laplace), puis « Appliquer au canevas » avec paliers colorés. Contenu attendu : 20 nœuds et 41 arcs, disposés en cinq colonnes de gauche à droite (contexte, politique, réponse, mécanisme, résilience). Pour la lisibilité, mettre en évidence le chemin principal : profil vers $d$ (durée du palier dégradé) et vers IPC ; durée de la perturbation et délai de réaction vers $d$ ; $h$ et $d$ vers IPC. Si la capture reste trop dense, envoyer à Claude le fichier .bif pour une version redessinée.]}}
-\captionof{figure}{Réseau bayésien appris sous contraintes, variables colorées par palier de l'ordre temporel d'une crise.}\label{fig:d6}
+\input{figures/tikz/fig_reseau_bayesien}
+\captionof{figure}{Réseau bayésien appris sous contraintes, variables colorées par palier de l'ordre temporel d'une crise : contexte, politique, réponse, mécanisme et résilience.}\label{fig:d6}
 \end{center}
+
+\textit{Reproductibilité.} Dans BayesArtist, importer la base \texttt{bayesartist\_apprentissage\_lotA.csv} (6 400 versions de crise, 20 variables) et les contraintes \texttt{bayesartist\_contraintes\_isomorph.json} (155 arcs interdits, quatre parents au plus), puis lancer l'apprentissage par recherche gloutonne (\textit{Greedy Hill Climbing}) au score BIC avec lissage de Laplace. Le réseau appris s'exporte au format \texttt{.bif} ; la figure est tracée à partir de ce fichier.
 
 \begin{table*}[htbp]
 \caption{Pronostic de la classe de perte cumulée sur les crises de test.}
@@ -154,9 +156,11 @@ Deux crises de même nature illustrent l'usage du réseau. Dans la première, un
 Dans la seconde, un site de stockage redondé est fermé pour une courte durée. La probabilité de forte perte tombe à 0,30 sans réaction, 0,22 sous le profil tardif et 0,20 sous le profil prudent. Avec $\theta$ = 0,8, le profil prudent atteint l'objectif avec une probabilité de 0,80 et devient la préconisation : face à un choc bref sur un site doublé, une réaction fondée sur le déstockage suffit, et mobiliser le reroutage et la capacité additionnelle n'apporterait qu'un gain marginal.
 
 \begin{center}
-\fbox{\parbox{0.92\textwidth}{\footnotesize [FIGURE À INSÉRER. Source : BayesArtist, réseau appris de la figure~\ref{fig:d6}, mode inférence. Évidences à poser : nature = \texttt{fermeture\_entrepot}, cible = \texttt{passage\_oblige}, duree = fort. Puis fixer successivement profil = none, tardif, prudent, reactif, et capturer la distribution du nœud IPC à chaque fois. Valeurs de contrôle pour la classe « fort » : 0,69, 0,55, 0,44 et 0,01. Présentation conseillée : les quatre captures assemblées côte à côte, ou une seule capture avec le profil réactif et les évidences visibles. Variante : Claude peut produire un diagramme en barres empilées des quatre distributions.]}}
-\captionof{figure}{Pronostic de la perte cumulée selon la politique, pour la fermeture longue d'un site situé sur un point de passage obligé.}\label{fig:d7}
+\input{figures/tikz/fig_inference}
+\captionof{figure}{Pronostic de la perte cumulée selon la politique, pour la fermeture longue d'un site situé sur un point de passage obligé : distribution des trois classes d'IPC inférée par le réseau appris.}\label{fig:d7}
 \end{center}
+
+\textit{Reproductibilité.} Dans BayesArtist, en mode inférence sur le réseau de la figure~\ref{fig:d6}, poser les évidences nature = \texttt{fermeture\_entrepot}, cible = \texttt{passage\_oblige} et durée = \texttt{fort}, puis fixer successivement le profil à \texttt{none}, \texttt{tardif}, \texttt{prudent} et \texttt{reactif}, et lire à chaque fois la distribution du nœud IPC.
 
 Le diagnostic éclaire le cas inverse, celui d'une crise à forte perte gérée par un profil prudent. Le réseau y associe une perturbation longue, avec une probabilité de 0,39 contre 0,33 a priori, un recours au déstockage presque certain (0,95) et une escalade jusqu'à trois leviers ou plus (0,40 contre 0,23 a priori). Il désigne ainsi une crise trop longue pour la politique choisie : le gestionnaire a escaladé, mais à partir de leviers de stock dont l'effet s'épuise, sans atteindre à temps le reroutage. Ce diagnostic oriente l'action corrective vers la politique, plus réactive ou dotée d'un autre ordre de leviers, plutôt que vers le réseau.
 
