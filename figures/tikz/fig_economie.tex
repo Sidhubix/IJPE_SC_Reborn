@@ -13,19 +13,19 @@
   grid=major, grid style={black!8},
   legend style={font=\scriptsize, draw=none, fill=white, fill opacity=0.9, text opacity=1, at={(0.98,0.98)}, anchor=north east, cells={anchor=west}},
   every axis plot/.append style={line width=1.2pt}]
-  \fill[polreac!7] (axis cs:0,-6) rectangle (axis cs:6628,20);
-  \node[font=\scriptsize, text=polreac!80!black, anchor=south west, align=left] at (axis cs:150,-5.6) {zone où la politique\\réactive est rentable};
-  \addplot[polnone] table[x=r, y expr=\thisrow{none}/1000] {figures/data/eco_benefice.dat};
+  \fill[appreac!6] (axis cs:0,-6) rectangle (axis cs:6628,20);
+  \node[font=\scriptsize, text=appreac!85!black, anchor=south west, align=left] at (axis cs:150,-5.6) {zone où la politique\\réactive est rentable};
+  \addplot[appnone] table[x=r, y expr=\thisrow{none}/1000] {figures/data/eco_benefice.dat};
   \addlegendentry{Sans réaction}
-  \addplot[poltard, dotted] table[x=r, y expr=\thisrow{tardif}/1000] {figures/data/eco_benefice.dat};
+  \addplot[apptard] table[x=r, y expr=\thisrow{tardif}/1000] {figures/data/eco_benefice.dat};
   \addlegendentry{Tardif}
-  \addplot[polprud, dashed] table[x=r, y expr=\thisrow{prudent}/1000] {figures/data/eco_benefice.dat};
+  \addplot[appprud] table[x=r, y expr=\thisrow{prudent}/1000] {figures/data/eco_benefice.dat};
   \addlegendentry{Prudent}
-  \addplot[polreac] table[x=r, y expr=\thisrow{reactif}/1000] {figures/data/eco_benefice.dat};
+  \addplot[appreac] table[x=r, y expr=\thisrow{reactif}/1000] {figures/data/eco_benefice.dat};
   \addlegendentry{Réactif}
-  \addplot[palmec, line width=1.6pt, densely dashed] table[x=r, y expr=\thisrow{posteriori}/1000] {figures/data/eco_benefice.dat};
+  \addplot[black!75, line width=1.6pt, densely dashed] table[x=r, y expr=\thisrow{posteriori}/1000] {figures/data/eco_benefice.dat};
   \addlegendentry{Meilleure politique choisie crise par crise}
   \draw[black!50, densely dotted] (axis cs:6628,-6) -- (axis cs:6628,20);
-  \node[font=\scriptsize, fill=white, inner sep=1pt, anchor=west] at (axis cs:6750,-4.2) {seuil de rentabilité de la politique réactive : 6 630};
+  \node[font=\scriptsize, fill=white, inner sep=1pt, anchor=west] at (axis cs:6750,9.3) {seuil de la politique réactive : 6 630};
 \end{axis}
 \end{tikzpicture}
