@@ -97,31 +97,6 @@ L'horizon $T$ de l'équation~\eqref{eq:11} couvre la chute et une reprise compl�
 
 La qualité de chaque ajustement est appréciée par le coefficient de détermination et l'erreur quadratique moyenne, calculés sur la trajectoire brute, ainsi que par un coefficient de détermination calculé sur la trajectoire lissée sur cinq jours. L'écart entre les deux coefficients distingue un défaut de forme de la courbe d'une simple fluctuation journalière de la demande. Les crises dont l'ajustement est insuffisant, ou dont la chute est trop faible pour être caractérisée, peuvent être écartées de la base.
 
-Trois situations appellent une attention particulière. La première est celle des crises absorbées sans dégradation notable, lorsque le réseau dispose d'assez de marge ou, en représentation temporelle, d'assez de stock : la profondeur $h$ tend vers zéro, les indicateurs rapportés à $h$, CRD et SRA, deviennent instables, et ces crises relèvent plutôt de la robustesse que de la résilience. La couverture de stock permet de déplacer cette frontière de manière contrôlée (section 3.3). La deuxième concerne les trajectoires à plusieurs creux, typiquement lorsqu'un stock mobilisé s'épuise avant la fin de la crise, ou lorsque le retour des capacités provoque un rétablissement brutal : la courbe n'en restitue qu'une enveloppe. En représentation temporelle, un second creux pourrait aussi apparaître sans aucune décision, lorsque les stocks s'épuisent avant que la matière en route ne les reconstitue ; cette hypothèse reste à examiner (section 7.3). La troisième concerne PR, qui augmente avec la profondeur de la chute à niveau final donné ; son sens d'interprétation doit être arrêté avant de l'utiliser comme objectif de pilotage.
+Trois situations appellent une attention particulière. La première est celle des crises absorbées sans dégradation notable, lorsque le réseau dispose d'assez de marge ou, en représentation temporelle, d'assez de stock : la profondeur $h$ tend vers zéro, les indicateurs rapportés à $h$, CRD et SRA, deviennent instables, et ces crises relèvent plutôt de la robustesse que de la résilience. La couverture de stock permet de déplacer cette frontière de manière contrôlée (section 3.3). La deuxième concerne les trajectoires à plusieurs creux, typiquement lorsqu'un stock mobilisé s'épuise avant la fin de la crise, ou lorsque le retour des capacités provoque un rétablissement brutal : la courbe n'en restitue qu'une enveloppe. La troisième concerne PR, qui augmente avec la profondeur de la chute à niveau final donné ; son sens d'interprétation doit être arrêté avant de l'utiliser comme objectif de pilotage.
 
-\subsection{Lecture des paramètres en termes de dysfonctionnements}
-\label{sec:4.5}
-
-Les paramètres de la courbe relient la trajectoire observée aux mécanismes décrits en section 3. Le tableau~\ref{tab:d8} résume les signatures attendues ; il constitue un ensemble d'hypothèses que l'analyse des résultats (section 6) et l'apprentissage causal (section 5) permettront de confirmer ou de nuancer.
-
-\begin{table*}[htbp]
-\caption{Signatures des dysfonctionnements sur la courbe de résilience.}
-\label{tab:d8}
-\footnotesize
-\begin{tabularx}{\textwidth}{@{}LLL@{}}
-\toprule
-\textbf{Phénomène} & \textbf{Signature attendue sur la courbe} & \textbf{Origine probable} \\
-\midrule
-Absorption du choc & $h$ faible, $g$ élevé & Marges de capacité, voies de secours suffisantes \\
-Absorption par les stocks & $h$ faible ou nul, $g$ élevé & Couverture de stock élevée au regard de la durée du choc \\
-Rupture brutale & $h$ élevé, $\alpha$ élevé & Coupure ou fermeture sévère, réseau sous tension \\
-Rupture différée & $g$ élevé, puis $h$ élevé & Stocks épuisés en cours de crise, matière en route insuffisante \\
-Dégradation progressive & $\alpha$ faible & Congestion diffuse, pic de demande modéré \\
-Crise prolongée & $d$ élevé & Perturbation longue, détection tardive, inertie décisionnelle \\
-Reprise retardée & $d$ supérieur à la durée du choc & Reconstitution des stocks et de la matière en route après le retour des capacités \\
-Reprise rapide & $\beta$ élevé, TRP faible & Levier efficace engagé tôt \\
-Perte durable & $q$ $<$ 0 & Capacité non restaurée à la fin de la période, stock épuisé \\
-Sur-récupération & $q$ $>$ 0 & Leviers maintenus après la fin de la perturbation \\
-\bottomrule
-\end{tabularx}
-\end{table*}
+Les signatures attendues de chaque dysfonctionnement sur ces paramètres (absorption, rupture brutale ou différée, crise prolongée, reprise retardée) sont résumées dans le matériel supplémentaire (tableau~S3).
