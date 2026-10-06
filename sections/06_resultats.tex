@@ -164,6 +164,17 @@ Dans la seconde, un site de stockage redondé est fermé pour une courte durée.
 
 Le diagnostic éclaire le cas inverse, celui d'une crise à forte perte gérée par un profil prudent. Le réseau y associe une perturbation longue, avec une probabilité de 0,39 contre 0,33 a priori, un recours au déstockage presque certain (0,95) et une escalade jusqu'à trois leviers ou plus (0,40 contre 0,23 a priori). Il désigne ainsi une crise trop longue pour la politique choisie : le gestionnaire a escaladé, mais à partir de leviers de stock dont l'effet s'épuise, sans atteindre à temps le reroutage. Ce diagnostic oriente l'action corrective vers la politique, plus réactive ou dotée d'un autre ordre de leviers, plutôt que vers le réseau.
 
+La figure~\ref{fig:carte} applique la lecture à rebours de la section~\ref{sec:5.3} aux sept contextes que la topologie d'ISOMORPH rend possibles, pour l'objectif d'une perte cumulée faible. Le profil réactif est le plus probable partout, et d'autant plus que le choc dure : sa probabilité a posteriori passe de 0,51 à 0,58 pour un choc court à 0,72 à 0,79 pour un choc long. Pour un choc court, les trois autres politiques conservent chacune entre 0,12 et 0,18 : une perte faible y reste accessible sans réaction rapide, ce qui rejoint la préconisation sobre de la section~\ref{sec:6.3}. La carte varie en revanche peu avec la nature du choc et la position de la cible, conformément au diagnostic : dans la structure apprise, ces variables n'agissent sur la perte qu'à travers les leviers mobilisés.
+
+\begin{center}
+\begin{minipage}{\textwidth}\centering
+\input{figures/tikz/fig_carte_preconisation}
+\captionof{figure}{Carte de préconisation obtenue par inférence à rebours : probabilité a posteriori de chaque profil sachant une perte cumulée faible, selon la nature du choc, la position de la cible et la durée. En gras, la politique la plus probable dans chaque contexte.}\label{fig:carte}
+\end{minipage}
+\end{center}
+
+\textit{Reproductibilité.} Dans BayesArtist, sur le réseau de la figure~\ref{fig:d6}, poser les évidences nature, cible et durée correspondant à une ligne de la carte, ainsi que IPC = \texttt{faible}, puis lire la distribution du nœud profil.
+
 \subsection{Sensibilité à la couverture de stock}
 \label{sec:6.5}
 
