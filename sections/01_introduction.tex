@@ -10,7 +10,9 @@ La littérature offre une typologie riche des stratégies d'atténuation et de c
 Cet article propose une démarche en trois étapes pour combler ce manque (Fig.~\ref{fig:d1}). La première génère par simulation des scénarios de crise étiquetés. Un réseau logistique multi-échelon, par exemple le réseau d'origine du jumeau numérique ouvert ISOMORPH \citep{zhang2026isomorph}, représenté par ses seules capacités ou avec ses délais et ses stocks, est soumis à des perturbations maîtrisées, un gestionnaire simulé y réagit, et chaque crise est rejouée sans réaction et sous trois profils de gestionnaire. La deuxième caractérise chaque trajectoire journalière de service par l'ajustement d'une courbe de résilience à sept paramètres et en déduit six indicateurs de résilience. La troisième apprend, à partir de la base obtenue, un réseau bayésien causal \citep{pearl2009} qui permet le pronostic, le diagnostic et la préconisation de politiques de gestion.
 
 \begin{center}
-\includegraphics[width=\textwidth]{figures/Fig1_demarche.pdf}
+% Ancienne figure détaillée, à réutiliser si besoin :
+% \includegraphics[width=\textwidth]{figures/Fig1_demarche.pdf}
+\resizebox{\textwidth}{!}{\input{figures/tikz/fig_demarche}}
 \captionof{figure}{Démarche en trois blocs. Le bloc 1 joue chaque crise sous quatre politiques de gestion ; le bloc 2 résume chaque trajectoire par une courbe à sept paramètres et six indicateurs ; le bloc 3 apprend un réseau bayésien dont la structure respecte l'ordre temporel d'une crise, et en tire pronostic, diagnostic et préconisation.}\label{fig:d1}
 \end{center}
 
