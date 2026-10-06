@@ -1,6 +1,6 @@
 % Section 5, version allégée (6 octobre 2026).
 
-\section{Apprentissage et préconisation de décisions (bloc 3)}
+\section{Apprentissage et préconisation de décisions (Apprendre)}
 \label{sec:5}
 
 Le bloc 3 apprend, à partir de la base produite par les blocs 1 et 2, un réseau bayésien causal qui relie le contexte d'une crise, la manière dont elle a été gérée et la résilience obtenue. Ce réseau raisonne dans les deux sens : du contexte et de la politique vers la résilience attendue (pronostic), et d'une résilience dégradée vers ses causes probables (diagnostic).
@@ -14,7 +14,7 @@ Chaque version d'une crise, c'est-à-dire une crise jouée sous un comportement 
 \caption{Variables de la base d'apprentissage.}
 \label{tab:d9}
 \footnotesize
-\begin{tabularx}{\textwidth}{@{}LLL@{}}
+\begin{tabularx}{\textwidth}{@{}P{2.5cm}LL@{}}
 \toprule
 \textbf{Groupe} & \textbf{Variables} & \textbf{Question de diagnostic associée} \\
 \midrule
@@ -43,7 +43,7 @@ La structure respecte l'ordre temporel d'une crise, qui impose des paliers qu'au
 \caption{Paliers de la structure causale.}
 \label{tab:d10}
 \footnotesize
-\begin{tabularx}{\textwidth}{@{}LLL@{}}
+\begin{tabularx}{\textwidth}{@{}P{2.3cm}LL@{}}
 \toprule
 \textbf{Palier} & \textbf{Variables} & \textbf{Statut causal} \\
 \midrule

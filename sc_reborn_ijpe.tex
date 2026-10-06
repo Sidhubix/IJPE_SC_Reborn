@@ -33,6 +33,9 @@
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.17}
 \newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+% Champs restant à compléter avant la soumission (en bleu)
+\newcommand{\acompleter}[1]{\textcolor{blue}{#1}}
 
 % Mettre \anonymetrue pour la version soumise en double aveugle (masque la déclaration CRediT).
 \newif\ifanonyme
@@ -50,9 +53,9 @@
 
 \title [mode = title]{\ArticleTitle}
 
-\author[1]{Auteurs anonymisés pour l'évaluation}
+\author[1]{\acompleter{Auteurs anonymisés pour l'évaluation}}
 
-\affiliation[1]{organization={Anonymisé},
+\affiliation[1]{organization={\acompleter{Anonymisé}},
             country={France}}
 
 \begin{abstract}
@@ -89,6 +92,8 @@ La résilience d'une chaîne logistique dépend autant de la réaction des gesti
 \begin{center}{\Large\bfseries Matériel supplémentaire}\end{center}
 \setcounter{table}{0}
 \renewcommand{\thetable}{S\arabic{table}}
+\setcounter{figure}{0}
+\renewcommand{\thefigure}{S\arabic{figure}}
 \input{sections/supplementaire_corps}
 
 \end{document}
