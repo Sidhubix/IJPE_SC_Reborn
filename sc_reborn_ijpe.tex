@@ -1,13 +1,15 @@
 %% Article SC-Reborn pour International Journal of Production Economics
 %% Fichier principal, fondé sur cas-sc-template.tex (Elsevier CAS, une colonne).
-%% État actuel : seule la section 2 (état de l'art) est rapatriée dans ce dépôt.
-%% Les autres sections seront ajoutées dans le dossier sections/.
+%% Le texte de chaque section est dans le dossier sections/.
+%% Titre, résumé, points clés et mots-clés : sections/00_front.tex.
 
 \documentclass[a4paper,fleqn]{cas-sc}
 
 \usepackage[T1]{fontenc}
 \usepackage[french]{babel}
 \usepackage[authoryear,longnamesfirst]{natbib}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
 \usepackage{tabularx}
 \usepackage{enumitem}
 \usepackage{tikz}
@@ -15,6 +17,8 @@
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.17}
 \newcolumntype{L}{>{\raggedright\arraybackslash}X}
+
+\input{sections/00_front}
 
 \begin{document}
 \let\WriteBookmarks\relax
@@ -24,7 +28,7 @@
 \shorttitle{Résilience des réseaux logistiques : simuler, mesurer, apprendre}
 \shortauthors{Auteurs anonymisés}
 
-\title [mode = title]{Préconiser des décisions de remédiation à partir de crises contrefactuelles simulées : courbe de résilience et réseau bayésien causal}
+\title [mode = title]{\ArticleTitle}
 
 \author[1]{Auteurs anonymisés pour l'évaluation}
 
@@ -32,21 +36,28 @@
             country={France}}
 
 \begin{abstract}
-[Le résumé sera rapatrié avec le reste de l'article.]
+La résilience d'une chaîne logistique dépend autant de la réaction des gestionnaires que de la perturbation elle-même. Pourtant, aucune base de données ne relie une perturbation, les décisions prises et la trajectoire de performance qui en résulte. Cet article propose une démarche en trois étapes pour combler ce manque. Premièrement, un réseau logistique multi-échelon est soumis à des perturbations maîtrisées de cinq natures, tandis qu'un gestionnaire simulé détecte la dégradation, décide et escalade parmi neuf leviers ; chaque crise est rejouée sans réaction et sous trois profils de gestionnaire, de sorte que les écarts de performance sont attribuables à la seule gestion. Deuxièmement, chaque trajectoire de service est résumée par une courbe de résilience hyperbolique composée, dont six indicateurs sont déduits analytiquement. Troisièmement, un réseau bayésien causal, dont la structure suit l'ordre temporel d'une crise et traite la politique de gestion comme une intervention, en tire pronostic, diagnostic et préconisation. Sur 2 000 crises simulées sur le réseau d'un jumeau numérique ouvert, la réaction agit sur la durée de la crise plutôt que sur sa profondeur : la politique la plus réactive évite 73 \% du service perdu, contre 18 \% et 14 \% pour les politiques prudente et tardive. L'efficacité des leviers et des stocks dépend de la nature du choc et de la topologie du réseau. Le réseau appris préconise, lorsque la durée du choc est connue, une politique plus sobre dans environ une crise sur sept sans perte notable de résilience.
 \end{abstract}
 
+\begin{highlights}
+\ArticleHighlights
+\end{highlights}
+
 \begin{keywords}
-Résilience \sep Chaîne logistique \sep Simulation contrefactuelle \sep Réseau bayésien causal
+\ArticleKeywords
 \end{keywords}
 
 \maketitle
 
-% Section 1 : Introduction (à rapatrier)
-\setcounter{section}{1} % provisoire : numérote l état de l art en section 2
-
+\input{sections/01_introduction}
 \input{sections/02_etat_de_lart}
-
-% Sections 3 à 8 (à rapatrier)
+\input{sections/03_generation_scenarios}
+\input{sections/04_caracterisation_resilience}
+\input{sections/05_apprentissage_preconisation}
+\input{sections/06_resultats}
+\input{sections/07_discussion}
+\input{sections/08_conclusion}
+\input{sections/09_declarations}
 
 \bibliographystyle{cas-model2-names}
 \bibliography{references}

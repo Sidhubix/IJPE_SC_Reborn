@@ -1,4 +1,4 @@
-\begin{thebibliography}{49}
+\begin{thebibliography}{54}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \providecommand{\url}[1]{\texttt{#1}}
 \providecommand{\href}[2]{#2}
@@ -22,6 +22,12 @@
 \newblock \bibinfo{journal}{International Journal of Production Economics}
   \bibinfo{volume}{235}, \bibinfo{pages}{108103}.
 \newblock \DOIprefix\doi{10.1016/j.ijpe.2021.108103}.
+%Type = Misc
+\bibitem[{{Anonymisé pour l'évaluation}(2026)}]{bayesartist}
+\bibinfo{author}{{Anonymisé pour l'évaluation}}, \bibinfo{year}{2026}.
+\newblock \bibinfo{title}{{BayesArtist} : outil d'apprentissage et d'inférence
+  sur réseaux bayésiens}.
+\newblock \bibinfo{howpublished}{Dépôt logiciel des auteurs}.
 %Type = Article
 \bibitem[{Behzadi et~al.(2020)Behzadi, O'Sullivan and Olsen}]{behzadi2020}
 \bibinfo{author}{Behzadi, G.}, \bibinfo{author}{O'Sullivan, M.J.},
@@ -209,6 +215,15 @@
   \bibinfo{volume}{232}, \bibinfo{pages}{107921}.
 \newblock \DOIprefix\doi{10.1016/j.ijpe.2020.107921}.
 %Type = Article
+\bibitem[{Ivanov et~al.(2019)Ivanov, Dolgui and Sokolov}]{ivanov2019ijpr}
+\bibinfo{author}{Ivanov, D.}, \bibinfo{author}{Dolgui, A.},
+  \bibinfo{author}{Sokolov, B.}, \bibinfo{year}{2019}.
+\newblock \bibinfo{title}{The impact of digital technology and {Industry 4.0}
+  on the ripple effect and supply chain risk analytics}.
+\newblock \bibinfo{journal}{International Journal of Production Research}
+  \bibinfo{volume}{57}, \bibinfo{pages}{829--846}.
+\newblock \DOIprefix\doi{10.1080/00207543.2018.1488086}.
+%Type = Article
 \bibitem[{Ivanov et~al.(2016)Ivanov, Pavlov, Dolgui, Pavlov and
   Sokolov}]{ivanov2016tre}
 \bibinfo{author}{Ivanov, D.}, \bibinfo{author}{Pavlov, A.},
@@ -281,6 +296,13 @@
 \newblock \bibinfo{journal}{International Journal of Production Economics}
   \bibinfo{volume}{223}, \bibinfo{pages}{107529}.
 \newblock \DOIprefix\doi{10.1016/j.ijpe.2019.107529}.
+%Type = Article
+\bibitem[{Little(1961)}]{little1961}
+\bibinfo{author}{Little, J.D.C.}, \bibinfo{year}{1961}.
+\newblock \bibinfo{title}{A proof for the queuing formula: {$L = \lambda W$}}.
+\newblock \bibinfo{journal}{Operations Research} \bibinfo{volume}{9},
+  \bibinfo{pages}{383--387}.
+\newblock \DOIprefix\doi{10.1287/opre.9.3.383}.
 %Type = Article
 \bibitem[{L{\"u}cker et~al.(2019)L{\"u}cker, Seifert and
   Bi{\c{c}}er}]{lucker2019}
@@ -384,6 +406,15 @@
   the 24th International Conference on Enterprise Information Systems (ICEIS
   2022)}, pp. \bibinfo{pages}{484--493}.
 \newblock \DOIprefix\doi{10.5220/0010983500003179}.
+%Type = Incollection
+\bibitem[{Scarf(1960)}]{scarf1960}
+\bibinfo{author}{Scarf, H.}, \bibinfo{year}{1960}.
+\newblock \bibinfo{title}{The optimality of {(S, s)} policies in the dynamic
+  inventory problem}, in: \bibinfo{editor}{Arrow, K.J.},
+  \bibinfo{editor}{Karlin, S.}, \bibinfo{editor}{Suppes, P.} (Eds.),
+  \bibinfo{booktitle}{Mathematical Methods in the Social Sciences}.
+  \bibinfo{publisher}{Stanford University Press}, \bibinfo{address}{Stanford,
+  CA}, pp. \bibinfo{pages}{196--202}.
 %Type = Article
 \bibitem[{Schmitt and Singh(2012)}]{schmitt2012}
 \bibinfo{author}{Schmitt, A.J.}, \bibinfo{author}{Singh, M.},
@@ -400,6 +431,12 @@
 \newblock \bibinfo{journal}{The Annals of Statistics} \bibinfo{volume}{6},
   \bibinfo{pages}{461--464}.
 \newblock \DOIprefix\doi{10.1214/aos/1176344136}.
+%Type = Book
+\bibitem[{Sheffi(2005)}]{sheffi2005book}
+\bibinfo{author}{Sheffi, Y.}, \bibinfo{year}{2005}.
+\newblock \bibinfo{title}{The Resilient Enterprise: Overcoming Vulnerability
+  for Competitive Advantage}.
+\newblock \bibinfo{publisher}{MIT Press}, \bibinfo{address}{Cambridge, MA}.
 %Type = Article
 \bibitem[{Sheffi and Rice(2005)}]{sheffirice2005}
 \bibinfo{author}{Sheffi, Y.}, \bibinfo{author}{Rice, Jr., J.B.},

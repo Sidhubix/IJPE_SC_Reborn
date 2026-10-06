@@ -1,0 +1,79 @@
+% Rapatrié depuis le doc de travail (onglet Article FR), révision 144.
+
+\section{Apprentissage et préconisation de décisions (bloc 3)}
+\label{sec:5}
+
+Le bloc 3 apprend, à partir de la base produite par les blocs 1 et 2, un réseau bayésien causal qui relie le contexte d'une crise, la manière dont elle a été gérée et la résilience obtenue. Ce réseau raisonne dans les deux sens : du contexte et de la politique de gestion vers la résilience attendue (pronostic), et d'une résilience dégradée vers ses causes probables (diagnostic). L'apprentissage est réalisé avec BayesArtist, outil que nous avons développé et qui sera diffusé en accès libre, comme le générateur de scénarios \citep{bayesartist}.
+
+\subsection{Construction de la base d'apprentissage}
+\label{sec:5.1}
+
+Chaque version d'une crise, c'est-à-dire une crise jouée sous un comportement de gestion donné, fournit une observation ; la base principale en compte 8 000. Les variables retenues sont organisées selon les grands types de causes qu'un diagnostic de résilience doit pouvoir distinguer : l'exposition du réseau, la perturbation, la politique de gestion et la réponse effective du gestionnaire. Elles sont complétées par le mécanisme de la chute et par la résilience obtenue (tableau~\ref{tab:d9}).
+
+\begin{table*}[htbp]
+\caption{Variables de la base d'apprentissage.}
+\label{tab:d9}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}LLL@{}}
+\toprule
+\textbf{Groupe} & \textbf{Variables} & \textbf{Question de diagnostic associée} \\
+\midrule
+Exposition du réseau & Position de la cible (point de passage obligé du flux, site redondé, réseau entier), part des articles critiques & Le choc a-t-il touché un point sans alternative ? \\
+Perturbation & Nature, sévérité, durée & Le choc était-il surmontable ? \\
+Politique de gestion & Profil : sans réaction, réactif, prudent, tardif & La politique de pilotage était-elle adaptée ? \\
+Réponse effective & Délai de détection, délai de réaction, nombre de leviers, familles de leviers mobilisées (capacité, reroutage, stock, demande) & La réaction a-t-elle été tardive ou mal ciblée ? \\
+Mécanisme de la chute & Paramètres $h$, $d$, $\alpha$, $\beta$ & Comment la crise s'est-elle déroulée ? \\
+Résilience & IPC (cible du pronostic), TRP, CRD & Quel niveau de résilience a été atteint ? \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+Deux choix de construction découlent des constats de la section 6.1. D'une part, la demande de référence n'est pas retenue comme variable de contexte : calibrée sur le volume livrable pendant l'incident, elle dépend de la perturbation elle-même et ne mesure pas une fragilité préalable du réseau. Elle est remplacée par la position de la cible dans la topologie, définie de manière générale : un site ou une liaison constitue un point de passage obligé si sa suppression déconnecte toutes les sources du client. Sur le réseau ISOMORPH, le hub de Nashville, l'entrepôt d'Atlanta et la liaison qui les relie sont dans ce cas ; la congestion et le pic de demande touchent le réseau entier. Cette variable, qui ne dépend que de la structure du réseau, se transpose à tout réseau étudié.
+
+D'autre part, la politique de gestion est représentée par le profil seul. Un profil combine un seuil de tolérance, un délai de décision, un rythme de réévaluation et un ordre de préférence entre leviers ; dans une base où ces caractéristiques sont fixées pour chaque profil, elles lui sont parfaitement redondantes, et le réseau ne pourrait pas les distinguer. Les décomposer suppose de réunir des lots où elles varient indépendamment, ce que le générateur permet (section 7.3). La réponse effective distingue en revanche l'absence de réaction, lorsque la performance n'a jamais franchi le seuil de tolérance, d'une réaction tardive, au moyen d'un état explicite « sans objet » plutôt que d'une valeur manquante.
+
+Les paramètres de la courbe sont conservés comme variables intermédiaires : ils décrivent le mécanisme par lequel une cause produit son effet et permettent, par exemple, de distinguer une chute brutale suivie d'une reprise rapide d'une dégradation lente suivie d'une reprise lente (tableau~\ref{tab:d8}). Trois paramètres sont écartés faute de variation dans la base : le niveau initial $k$, proche de 1 par construction, l'écart final $q$, proche de 0 parce que les crises se résorbent avant la fin de la période observée, et le délai d'absorption $g$, presque toujours nul, la chute commençant dès le premier jour de l'incident dans la représentation par flux. Trois des six indicateurs sont retenus. IPC, fidèle au service perdu observé (section 6.1) et sans ambiguïté de sens, une perte plus faible étant toujours préférable, sert de cible au pronostic ; TRP et CRD le complètent. SRA, largement redondant avec les paramètres de la courbe, ERR, trop peu dispersé pour discriminer les crises, et PR, dont le sens favorable dépend de la profondeur de la chute (section 4.4), sont écartés.
+
+Trois règles de préparation complètent la construction de la base. Toutes les versions sont conservées, y compris celles dont l'ajustement est imparfait : IPC reste fidèle au service perdu même lorsque la forme de la courbe est mal restituée, et écarter les crises mal ajustées éliminerait surtout les crises courtes, donc une partie des réussites du profil réactif. Les variables continues sont discrétisées en trois classes de même effectif, dont les seuils sont calculés sur l'échantillon d'apprentissage puis figés, ce qui permet d'appliquer le réseau à des crises nouvelles sans recalculer les classes. Enfin, l'identité précise du site touché n'est pas utilisée, la nature de la perturbation et la position de la cible portant l'information causale utile, et les caractéristiques constantes dans le plan d'expériences, comme le nombre de sites, sont exclues.
+
+\subsection{Modèle bayésien causal retenu}
+\label{sec:5.2}
+
+La structure du réseau respecte l'ordre temporel d'une crise, qui impose des paliers qu'aucune relation causale ne peut remonter. Le contexte, la perturbation et la politique de gestion précèdent la crise ; la réponse du gestionnaire se déroule pendant la crise ; le mécanisme de la chute et la résilience en résultent (tableau~\ref{tab:d10}).
+
+\begin{table*}[htbp]
+\caption{Paliers de la structure causale.}
+\label{tab:d10}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}LLL@{}}
+\toprule
+\textbf{Palier} & \textbf{Variables} & \textbf{Statut causal} \\
+\midrule
+1a. Contexte & Position de la cible, part des articles critiques, nature, sévérité et durée de la perturbation & Exogène \\
+1b. Politique & Profil de gestion & Intervention, sans cause dans le modèle \\
+2. Réponse & Détection, délai de réaction, leviers mobilisés & Médiateur \\
+3. Mécanisme & Paramètres $h$, $d$, $\alpha$ et $\beta$ de la courbe de résilience & Médiateur \\
+4. Résilience & IPC, TRP, CRD & Effet \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+La politique de gestion occupe une place particulière. Assignée indépendamment de la crise, et comparée sur des crises strictement identiques, elle constitue une intervention au sens de Pearl \citep{pearl2009} : son effet sur la résilience est identifiable sans ajustement sur d'autres variables. Les leviers effectivement mobilisés, en revanche, dépendent de ce que le gestionnaire a perçu de la situation ; ce sont des médiateurs entre la perturbation et la politique d'un côté, la résilience de l'autre.
+
+À l'intérieur des paliers, plusieurs relations découlent directement des mécanismes décrits en section 3 et constituent des hypothèses de départ : la nature de la perturbation conditionne les leviers pertinents, la sévérité et la durée conditionnent l'escalade, et la sévérité agit directement sur la profondeur de la chute, indépendamment des décisions. L'apprentissage peut confirmer, affaiblir ou compléter ces relations, sans jamais violer l'ordre des paliers.
+
+L'apprentissage est réalisé avec BayesArtist, outil de calcul pour réseaux bayésiens que nous avons développé \citep{bayesartist}. La structure est apprise par recherche locale gloutonne au score bayésien d'information (BIC), qui ajoute, inverse ou supprime des arcs tant que le compromis entre vraisemblance et complexité du graphe s'améliore ; l'ordre des paliers du tableau~\ref{tab:d10} est imposé à l'algorithme comme une liste d'arcs interdits, complétée par une limite de quatre parents par variable, de sorte qu'aucune structure apprise ne peut violer la temporalité de la crise. Les tables de probabilités conditionnelles sont estimées par comptage des occurrences, avec un lissage de Laplace qui évite d'attribuer une probabilité nulle à une combinaison de causes absente de la base. Les variables continues sont discrétisées avant l'apprentissage selon la règle de la section 5.1. L'inférence exacte s'appuie sur l'élimination de variables ou sur un arbre de jonction selon le nombre de requêtes simultanées, avec un recours à l'échantillonnage pondéré par vraisemblance lorsque le réseau devient trop dense pour l'inférence exacte.
+
+\subsection{Inférence : pronostic, diagnostic et préconisation}
+\label{sec:5.3}
+
+Le réseau appris est exploité selon trois modes d'inférence. En pronostic, il donne la distribution de la résilience pour un contexte et une politique donnés, par exemple la probabilité d'une perte cumulée faible face à la fermeture sévère d'un site de stockage gérée par un profil prudent. En diagnostic, il remonte d'une résilience dégradée vers les causes les plus probables : point de passage obligé touché, choc difficilement surmontable, perception tardive, inertie décisionnelle ou leviers inadaptés, seuls ou en conjonction.
+
+La préconisation combine les deux. Face à une nouvelle crise, décrite en tout ou partie, et à un objectif de résilience, par exemple une perte cumulée faible, chaque politique candidate est évaluée par la probabilité d'atteindre cet objectif. La politique étant une intervention, cette probabilité se lit directement dans le réseau, sans ajustement. La règle retenue privilégie la sobriété : parmi les politiques dont la probabilité d'atteindre l'objectif dépasse un seuil $\theta$ fixé par le décideur, est préconisée la moins interventionniste, les politiques étant ordonnées par le nombre moyen de leviers qu'elles engagent, de l'absence de réaction au profil réactif en passant par les profils tardif et prudent (tableau~\ref{tab:d12}) ; si aucune n'atteint le seuil, la politique la plus probable est préconisée. Cette règle traduit le fait que tout levier a un coût que le modèle ne valorise pas : à résilience égale, mobiliser moins de leviers est préférable. Les leviers observés ne bénéficient pas de la propriété d'intervention ; la préconisation porte donc sur la politique, et les leviers sont interprétés comme ses médiateurs.
+
+\subsection{Validation sur scénarios nouveaux}
+\label{sec:5.4}
+
+La validation exploite une propriété rare de la base : chaque crise y est observée sous les quatre politiques. Les 2 000 scénarios sont partagés aléatoirement en un échantillon d'apprentissage de 1 600 scénarios et un échantillon de test de 400. Le découpage porte sur les scénarios et non sur les versions, puisque les quatre versions d'une même crise ne sont pas indépendantes. Le réseau, appris sur le premier échantillon, est évalué sur le second selon trois critères.
+
+Le pronostic est jugé sur la prédiction de la classe de perte cumulée à partir des seules variables connues au moment de décider, le contexte et la politique : taux de classement correct et score de Brier, comparés à deux références, la classe majoritaire et un modèle fondé sur la seule politique. Le diagnostic est jugé en confrontant, pour les crises à forte perte, la distribution a posteriori des causes à leur fréquence observée dans l'échantillon de test. La préconisation est jugée directement sur les crises de test : chacune ayant été jouée sous toutes les politiques, on vérifie si la politique préconisée a effectivement atteint l'objectif, et l'on mesure la part des préconisations plus sobres que le profil réactif. Une courbe d'apprentissage, obtenue avec 200, 400, 800 et 1 600 scénarios d'apprentissage, indique si la taille de la base est suffisante.

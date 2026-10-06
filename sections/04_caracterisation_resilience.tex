@@ -1,0 +1,126 @@
+% Rapatrié depuis le doc de travail (onglet Article FR), révision 144.
+
+\section{Caractérisation de la résilience par ajustement (bloc 2)}
+\label{sec:4}
+
+Une trajectoire journalière de performance est trop longue et trop bruitée pour être comparée directement d'une crise à l'autre. Le bloc 2 la résume par une courbe de résilience paramétrique, dans l'esprit du triangle de résilience \citep{bruneau2003} : un niveau nominal, une chute, un palier dégradé, une reprise et un niveau final. Chaque paramètre ayant une lecture opérationnelle directe, il devient possible de décrire une crise par ses caractéristiques, puis par six indicateurs de résilience.
+
+\subsection{Fonction hyperbolique composée et ses sept paramètres}
+\label{sec:4.1}
+
+La performance $p(x)$, où x est le temps écoulé depuis le déclenchement de la perturbation, combine deux transitions, l'une décroissante pour la chute, l'autre croissante pour la reprise \citep{rahiel2026in4pl} :
+
+\begin{equation}
+p(x) = k + \frac{q}{2} - \frac{h}{2}\tanh\left(\frac{\alpha\,(x - g)}{2}\right) + \frac{h + q}{2}\tanh\left(\frac{\beta\,(x - g - d)}{2}\right)
+\label{eq:5}
+\end{equation}
+
+Avant la crise, p vaut $k$ ; au cœur de la crise, lorsque les deux transitions sont bien séparées, elle atteint le palier $k$ $-$ $h$ ; après la reprise, elle se stabilise en $k$ + $q$. La courbe est ainsi décrite par trois niveaux et quatre grandeurs de forme (tableau~\ref{tab:d6}).
+
+\begin{table*}[htbp]
+\caption{Paramètres de la courbe de résilience.}
+\label{tab:d6}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}LLL@{}}
+\toprule
+\textbf{Paramètre} & \textbf{Signification} & \textbf{Lecture pour la chaîne logistique} \\
+\midrule
+$k$ & Niveau avant la perturbation & Service nominal du réseau \\
+$h$ & Profondeur de la chute & Ampleur de la perte de service au plus fort de la crise \\
+$q$ & Écart entre niveau final et niveau initial & Perte durable ($q$ $<$ 0) ou sur-récupération ($q$ $>$ 0) \\
+$g$ & Décalage de la chute & Temps pendant lequel le réseau absorbe le choc avant de se dégrader, par ses marges de capacité et, en représentation temporelle, par ses stocks et la matière en route \\
+$d$ & Durée entre chute et reprise & Durée du palier dégradé, liée à la persistance du choc, au délai de réaction et, en représentation temporelle, au temps de reconstitution des stocks après le retour des capacités \\
+$\alpha$ & Raideur de la chute & Brutalité de la dégradation \\
+$\beta$ & Raideur de la reprise & Rapidité du rétablissement \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+Quelques contraintes garantissent une forme interprétable : le palier dégradé reste positif, le niveau final reste au-dessus du palier, et les raideurs ainsi que la durée du palier ne peuvent descendre sous des valeurs minimales qui produiraient des formes sans signification.
+
+\subsection{Estimation des paramètres}
+\label{sec:4.2}
+
+Chaque trajectoire est recalée sur le déclenchement de la perturbation, de sorte que la période précédant la crise fournit directement le niveau nominal. Les sept paramètres sont estimés en minimisant un critère robuste qui pénalise les grands écarts moins fortement que les moindres carrés :
+
+\begin{equation}
+L(\theta) = \sum_{i} 2\left(\sqrt{1 + \frac{r_i^2}{f^2}} - 1\right), \qquad r_i = p(x_i;\theta) - \mathrm{IP}(x_i), \qquad f = 0{,}05
+\label{eq:6}
+\end{equation}
+
+Ce choix répond à une caractéristique des crises logistiques : la phase de reprise est rarement monotone. Rebonds, oscillations et à-coups liés à l'engagement successif des leviers ne peuvent être reproduits par une courbe à une seule chute. Le critère robuste en limite l'influence et oriente l'ajustement vers la profondeur et la largeur du creux, qui portent l'essentiel de l'information sur la résilience. Le critère n'étant pas convexe, l'estimation part de plusieurs points initiaux construits à partir de la trajectoire observée (niveau avant crise, minimum atteint, niveau final) et retient la meilleure solution (Fig.~\ref{fig:d4}).
+
+\begin{figure*}[htbp]
+\centering
+\fbox{\parbox{0.92\textwidth}{\footnotesize [FIGURE À INSÉRER. Source : Isomorph-Reborn, onglet « Ajustement par lot » ou visualisation de la courbe de résilience, scénario S0366, branche « Aucune décision » (coefficient de détermination 0,97). Contenu attendu : points journaliers observés et courbe ajustée continue. Annotations à ajouter : niveau initial $k$, profondeur $h$ (flèche verticale), décalage $g$, durée du palier $d$ (flèche horizontale), pentes $\alpha$ à la chute et $\beta$ à la reprise, écart final $q$ ; surface grisée entre le niveau initial et la courbe pour représenter la perte cumulée IPC. Les annotations peuvent être ajoutées à la main sur la capture, ou Claude peut produire la figure annotée à partir des fichiers \texttt{ip\_timeseries.csv} et \texttt{resilience\_ip.csv} du lot A.]}}
+\caption{Trajectoire observée et courbe ajustée pour la crise de la figure~\ref{fig:d3}, en l'absence de réaction, avec la lecture des paramètres.}
+\label{fig:d4}
+\end{figure*}
+
+\subsection{Définition des six indicateurs de résilience}
+\label{sec:4.3}
+
+Six indicateurs sont calculés analytiquement à partir des paramètres ajustés. Ils héritent ainsi du lissage opéré par l'ajustement et décrivent chacun une facette de la résilience : perte subie, vitesse et durée de la reprise, capacité d'adaptation, performance conservée et potentiel de rétablissement.
+
+\begin{align}
+\mathrm{IPC} &= \frac{h}{\alpha}\ln 2 + \frac{h\,d}{2} - \frac{h + q}{\beta}\ln 2 \label{eq:7} \\
+\mathrm{CRD} &= \frac{\beta}{\alpha}\cdot\frac{h + q}{h}\cdot\frac{1}{d}\cdot\sqrt{\alpha\beta} \label{eq:8} \\
+\mathrm{TRP} &= d + \frac{2{,}95}{\beta} \label{eq:9} \\
+\mathrm{SRA} &= \frac{\beta\,(h + q)}{\alpha\,h\,d}\, e^{-|q|/h}\,\big(1 + \tanh(\beta - \alpha)\big) \label{eq:10} \\
+\mathrm{ERR} &= 1 + \frac{q}{2k} - \frac{h\,|\mathrm{IPC}|}{T\,k}, \quad T = g + d + \frac{4}{\beta} \label{eq:11} \\
+\mathrm{PR} &= \frac{k + q}{k - h/2} \label{eq:12}
+\end{align}
+
+\begin{table*}[htbp]
+\caption{Les six indicateurs de résilience.}
+\label{tab:d7}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}LLLL@{}}
+\toprule
+\textbf{Indicateur} & \textbf{Dimension de la résilience} & \textbf{Interprétation} & \textbf{Sens favorable} \\
+\midrule
+IPC, indice de perte cumulée & Perte & Service cumulé perdu pendant la crise, analogue à l'aire du triangle de résilience & Faible \\
+CRD, coefficient de récupération dynamique & Vitesse & Rapidité de la reprise rapportée à l'ampleur de la chute et à la durée du palier & Élevé \\
+TRP, temps de récupération pondéré & Durée & Temps nécessaire pour que la reprise atteigne 95 \% de son amplitude & Faible \\
+SRA, score de robustesse adaptative & Adaptation & Capacité à remonter, pénalisée par un écart durable au niveau initial & Élevé \\
+ERR, efficacité de résilience relative & Performance conservée & Part du service nominal maintenue sur l'épisode & Élevé, proche de 1 \\
+PR, potentiel de récupération & Rétablissement & Niveau final rapporté à la mi-profondeur de la chute & À préciser (voir 4.4) \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+L'horizon $T$ de l'équation~\eqref{eq:11} couvre la chute et une reprise complète à environ 98 \%, conformément à la définition proposée en \citep{rahiel2026in4pl} ; il s'adapte ainsi à la durée propre de chaque crise au lieu d'imposer une fenêtre fixe.
+
+\subsection{Qualité d'ajustement et cas limites}
+\label{sec:4.4}
+
+La qualité de chaque ajustement est appréciée par le coefficient de détermination et l'erreur quadratique moyenne, calculés sur la trajectoire brute, ainsi que par un coefficient de détermination calculé sur la trajectoire lissée sur cinq jours. L'écart entre les deux coefficients distingue un défaut de forme de la courbe d'une simple fluctuation journalière de la demande. Les crises dont l'ajustement est insuffisant, ou dont la chute est trop faible pour être caractérisée, peuvent être écartées de la base.
+
+Trois situations appellent une attention particulière. La première est celle des crises absorbées sans dégradation notable, lorsque le réseau dispose d'assez de marge ou, en représentation temporelle, d'assez de stock : la profondeur $h$ tend vers zéro, les indicateurs rapportés à $h$, CRD et SRA, deviennent instables, et ces crises relèvent plutôt de la robustesse que de la résilience. La couverture de stock permet de déplacer cette frontière de manière contrôlée (section 3.3). La deuxième concerne les trajectoires à plusieurs creux, typiquement lorsqu'un stock mobilisé s'épuise avant la fin de la crise, ou lorsque le retour des capacités provoque un rétablissement brutal : la courbe n'en restitue qu'une enveloppe. En représentation temporelle, un second creux pourrait aussi apparaître sans aucune décision, lorsque les stocks s'épuisent avant que la matière en route ne les reconstitue ; cette hypothèse reste à examiner (section 7.3). La troisième concerne PR, qui augmente avec la profondeur de la chute à niveau final donné ; son sens d'interprétation doit être arrêté avant de l'utiliser comme objectif de pilotage.
+
+\subsection{Lecture des paramètres en termes de dysfonctionnements}
+\label{sec:4.5}
+
+Les paramètres de la courbe relient la trajectoire observée aux mécanismes décrits en section 3. Le tableau~\ref{tab:d8} résume les signatures attendues ; il constitue un ensemble d'hypothèses que l'analyse des résultats (section 6) et l'apprentissage causal (section 5) permettront de confirmer ou de nuancer.
+
+\begin{table*}[htbp]
+\caption{Signatures des dysfonctionnements sur la courbe de résilience.}
+\label{tab:d8}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}LLL@{}}
+\toprule
+\textbf{Phénomène} & \textbf{Signature attendue sur la courbe} & \textbf{Origine probable} \\
+\midrule
+Absorption du choc & $h$ faible, $g$ élevé & Marges de capacité, voies de secours suffisantes \\
+Absorption par les stocks & $h$ faible ou nul, $g$ élevé & Couverture de stock élevée au regard de la durée du choc \\
+Rupture brutale & $h$ élevé, $\alpha$ élevé & Coupure ou fermeture sévère, réseau sous tension \\
+Rupture différée & $g$ élevé, puis $h$ élevé & Stocks épuisés en cours de crise, matière en route insuffisante \\
+Dégradation progressive & $\alpha$ faible & Congestion diffuse, pic de demande modéré \\
+Crise prolongée & $d$ élevé & Perturbation longue, détection tardive, inertie décisionnelle \\
+Reprise retardée & $d$ supérieur à la durée du choc & Reconstitution des stocks et de la matière en route après le retour des capacités \\
+Reprise rapide & $\beta$ élevé, TRP faible & Levier efficace engagé tôt \\
+Perte durable & $q$ $<$ 0 & Capacité non restaurée à la fin de la période, stock épuisé \\
+Sur-récupération & $q$ $>$ 0 & Leviers maintenus après la fin de la perturbation \\
+\bottomrule
+\end{tabularx}
+\end{table*}
