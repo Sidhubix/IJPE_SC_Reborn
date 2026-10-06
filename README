@@ -1,46 +1,14 @@
-Version 2.4
+Article SC-Reborn pour International Journal of Production Economics (IJPE)
 
-This bundle provides two classfiles, namely cas-sc.cls and cas-dc.cls
-and corresponding template files for typesetting journal articles
-supposed to go through Elsevier's updated workflow. cas-sc.cls is meant
-for one-column, the other cas-dc.cls for two-column layout. These are
-now accepted for submitting articles both in Elsevier's electronic
-submission system and elsewhere.
+Fichier à compiler : sc_reborn_ijpe.tex (pdfLaTeX, BibTeX, puis deux fois pdfLaTeX).
+Le PDF obtenu contient l'article suivi du matériel supplémentaire.
+sc_reborn_supplementaire.tex compile le matériel supplémentaire seul, comme fichier séparé pour la soumission.
 
-Bugs and problems with classfiles may be reported to the
-developers of the class via elsarticle@stmdocs.in.
+Organisation :
+  sections/          texte de chaque section (00_front : titre, points clés, mots-clés)
+  sections/supplementaire_corps.tex   contenu du matériel supplémentaire
+  figures/           figures PDF, code TikZ (figures/tikz) et données des figures (figures/data)
+  references.bib     bibliographie vérifiée
+  cas-sc.cls, cas-common.sty, cas-model2-names.bst   classe et style Elsevier CAS (une colonne)
 
-The file manifest.txt provides a list of the files in the
-elsarticle-cas bundle.  The following are the main files available:
-
-- cas-sc.cls, classfile to typeset article in single column
-- cas-dc.cls, classfile to typeset article in double column
-- cas-sc-template.tex, template file for single column journals
-- cas-dc-template.tex, template file for double column journals
-- cas-common.sty, additional macro package for formatting
-- cas-model2-names.bst, BibTeX style file
-- cas-refs.bib, sample BibTeX database
-- cas-twitter.jpeg, cas-linkedin.jpeg, cas-url.jpeg, cas-gplus.jpeg, 
-  cas-facebook.jpeg, cas-email.jpeg - thumbnail images of social 
-  networking sites
-
-The PDF documentation elsdoc-cas.pdf is in the doc directory.  To
-generate it:
-
- 1. pdflatex elsdoc-cas
- 2. pdflatex elsdoc-cas
- 3. pdflatex elsdoc-cas
-
-or
-
-use the makefile. Use the target `all' (eg: make all) in doc
-directory.
-
-The above procedure will create a print version, namely elsdoc-cas.pdf.
-
-Copyright 2019-2021, Elsevier. Bugs, feature requests, suggestions and
-comments may be mailed to elsarticle@stmdocs.in. cas-sc.cls, cas-dc.cls
-related documentations and supporting packages are released under the
-LATEX Project Public Licence, either version 1.2 or any later
-version. This work has the LPPL maintenance status
-'author-maintained'.
+Double aveugle : mettre \anonymetrue dans sc_reborn_ijpe.tex pour masquer la déclaration CRediT.

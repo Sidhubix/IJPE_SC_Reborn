@@ -6,3 +6,4 @@
 *.fdb_latexmk
 *.abs
 *.synctex.gz
+*.bbl
