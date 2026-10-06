@@ -1,0 +1,157 @@
+% =====================================================================
+% Section 2 : État de l'art
+% Rédaction du 6 octobre 2026. Chaque citation a été vérifiée (DOI) ;
+% les articles comparés directement à notre travail ont été lus en entier
+% ou, à défaut, cités pour ce qu'affirme leur résumé.
+% Les renvois aux sections 3 à 6 et à la figure 1 sont écrits en dur
+% tant que le reste de l'article n'est pas rapatrié dans ce dépôt.
+% =====================================================================
+
+\section{État de l'art}
+\label{sec:etat}
+
+La résilience d'un réseau logistique se lit dans la façon dont sa performance se dégrade puis se rétablit après une perturbation. Cette trajectoire dépend de deux facteurs : ce qui a frappé le réseau et ce que le gestionnaire a décidé pour y répondre. Préconiser une décision suppose donc de relier, pour un grand nombre de crises, la perturbation subie, la décision prise et la trajectoire qui en résulte. Cette section examine comment la littérature traite chacun de ces éléments : la mesure de la résilience (section~\ref{sec:ea-mesure}), les stratégies d'atténuation et de contingence (section~\ref{sec:ea-strategies}), la simulation des perturbations et du rétablissement (section~\ref{sec:ea-simulation}) et les réseaux bayésiens causaux (section~\ref{sec:ea-rb}). La section~\ref{sec:ea-lacune} en tire le manque que ce travail vise à combler.
+
+% ---------------------------------------------------------------------
+\subsection{Résilience des chaînes logistiques : définitions, courbe et triangle de résilience}
+\label{sec:ea-mesure}
+
+Les revues de littérature s'accordent sur une définition de la résilience comme la capacité d'une chaîne logistique à se préparer aux perturbations, à y répondre et à s'en rétablir \citep{tukamuhabwa2015, kamalahmadi2016}. \citet{kamalahmadi2016} organisent cette capacité en trois phases, l'anticipation, la résistance, puis le rétablissement et la réponse. Leur revue de cent articles montre aussi que la mesure reste le parent pauvre du domaine : huit travaux seulement y sont consacrés, contre soixante-huit aux principes de la résilience. Une partie des mesures existantes repose sur la perception des acteurs, comme l'échelle de \citet{chowdhury2017}, qui évalue par enquête les capacités proactive et réactive et la qualité de conception de la chaîne. Ces mesures renseignent sur les capacités d'une entreprise, mais pas sur ce qui se passe pendant une crise donnée.
+
+L'autre famille de mesures part de la performance observée dans le temps. \citet{bruneau2003} associent la perte de résilience à la surface comprise entre la performance nominale et la performance dégradée, jusqu'au retour à l'équilibre : c'est le triangle de résilience (Fig.~\ref{fig:courbe}). Dans le champ logistique, \citet{sheffirice2005} décrivent un profil de perturbation en huit phases, de la préparation à l'impact durable, valable quelle que soit la mesure retenue : ventes, production, profit ou service au client. \citet{henry2012} généralisent l'idée en définissant la résilience comme une fonction du temps, qui tient compte de l'événement, de la restauration des composants et de la stratégie adoptée. \citet{zobel2011} montrent que deux crises de même surface ne se valent pas pour le décideur, qui arbitre entre l'ampleur de l'impact initial et la durée du rétablissement. \citet{hosseini2016} recensent la diversité de ces mesures selon les domaines, et \citet{hosseini2019tre} classent les méthodes quantitatives appliquées à la chaîne logistique selon la capacité qu'elles mobilisent : absorber, s'adapter ou se rétablir.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=0.95\textwidth, height=6.4cm,
+  xmin=0, xmax=100, ymin=0, ymax=1.2,
+  axis lines=left,
+  xlabel={Temps $t$}, ylabel={Performance $P(t)$},
+  xtick={20,26,58,84},
+  xticklabels={$t_e$,$t_d$,$t_r^{\mathrm{déc}}$,$t_r^{\mathrm{sans}}$},
+  ytick={0.42,1}, yticklabels={$P_{\min}$,$P_0$},
+  every axis plot/.append style={thick},
+  legend style={font=\footnotesize, draw=none, fill=none, at={(0.99,0.03)}, anchor=south east},
+  clip=false]
+  % Perte de résilience avec décision (entre le nominal et la trajectoire avec décision)
+  \addplot[fill=red!14, draw=none, forget plot] coordinates
+    {(20,1) (26,0.751) (32,0.64) (40,0.64) (58,0.975) (58,1) (20,1)};
+  % Perte évitée par la décision (entre les deux trajectoires)
+  \addplot[pattern=north east lines, pattern color=green!45!black, draw=none, forget plot] coordinates
+    {(26,0.751) (32,0.64) (40,0.64) (58,0.975) (84,0.975) (84,0.96) (52,0.42) (34,0.42) (26,0.751)};
+  % Niveau nominal
+  \addplot[dashed, gray, forget plot] coordinates {(0,1) (100,1)};
+  % Trajectoire sans réaction
+  \addplot[black!70, densely dashed] coordinates
+    {(0,1) (20,1) (34,0.42) (52,0.42) (84,0.96) (100,0.96)};
+  \addlegendentry{Sans réaction}
+  % Trajectoire avec décision prise en t_d
+  \addplot[blue!70!black] coordinates
+    {(0,1) (20,1) (26,0.751) (32,0.64) (40,0.64) (58,0.975) (100,0.975)};
+  \addlegendentry{Avec décision en $t_d$}
+  % Repères
+  \draw[gray, densely dotted] (axis cs:20,0) -- (axis cs:20,1);
+  \draw[gray, densely dotted] (axis cs:26,0) -- (axis cs:26,0.751);
+  \draw[gray, densely dotted] (axis cs:58,0) -- (axis cs:58,0.975);
+  \draw[gray, densely dotted] (axis cs:84,0) -- (axis cs:84,0.96);
+  % Étiquettes
+  \node[font=\scriptsize, align=center] at (axis cs:46,0.90) {Perte de résilience\\avec décision};
+  \node[font=\scriptsize, align=center, fill=white, inner sep=1pt] at (axis cs:64,0.70) {Perte évitée\\par la décision};
+  \node[font=\scriptsize, anchor=south] at (axis cs:10,1.02) {Régime nominal};
+  \node[font=\scriptsize, anchor=north, align=center] at (axis cs:43,0.38) {Creux de\\performance};
+  \node[font=\scriptsize, anchor=south, align=center] at (axis cs:92,1.02) {Nouvel\\équilibre};
+\end{axis}
+\end{tikzpicture}
+\caption{Courbe de performance après une perturbation survenue en $t_e$ (schéma illustratif, d'après le cadre de \citet{bruneau2003}). La perte de résilience est la surface comprise entre le niveau nominal $P_0$ et la trajectoire. Rejouer la même crise sans réaction, puis avec une décision prise en $t_d$, isole l'effet de cette décision (surface hachurée) : c'est le principe des versions contrefactuelles produites par le bloc~1.}
+\label{fig:courbe}
+\end{figure}
+
+Plusieurs travaux tirent de cette trajectoire des indicateurs utilisables pour décider. \citet{spiegler2012} mesurent la résilience par l'intégrale de l'écart pondéré par le temps sur les niveaux de stock et d'expédition, et montrent qu'une chaîne plus résiliente coûte plus cher en production : la résilience a un prix. \citet{simchilevi2015} évaluent chez Ford l'exposition au risque à partir du temps de rétablissement de chaque site, sans recourir à des probabilités de perturbation. \citet{behzadi2020} montrent que le choix de la mesure modifie la stratégie d'investissement retenue, et proposent la valeur actualisée du profit perdu. \citet{dixit2020} relient la résilience avant et après une catastrophe aux paramètres structurels du réseau, tels que la densité, la centralité et la connectivité.
+
+Une formalisation récente décrit la courbe entière par une fonction explicite plutôt que par des indicateurs calculés point par point. Une fonction composée de tangentes hyperboliques, à sept paramètres, couvre le cycle complet de la perturbation et fournit six indicateurs, dont la perte cumulée, la vitesse de reprise et la robustesse adaptative \citep{rahiel2026in4pl, rahiel2026these}. Ces mesures, comme les précédentes, s'appliquent à une courbe déjà observée. Aucune ne dit comment obtenir en nombre des courbes comparables, pour des crises variées et des réponses différentes. Le bloc~2 reprend cette formalisation ; le bloc~1 produit les courbes auxquelles elle s'applique.
+
+% ---------------------------------------------------------------------
+\subsection{Stratégies d'atténuation et de contingence face aux perturbations}
+\label{sec:ea-strategies}
+
+La littérature distingue les mesures prises avant la perturbation, dites d'atténuation, de celles prises une fois qu'elle survient, dites de contingence. \citet{tang2006} classe les premières selon qu'elles portent sur l'approvisionnement, la demande, le produit ou l'information. \citet{tomlin2006} formalise le choix pour un produit et deux fournisseurs, l'un bon marché mais peu fiable, l'autre fiable mais plus cher. La stratégie optimale y dépend du taux de disponibilité du fournisseur et de la nature des ruptures, fréquentes et courtes ou rares et longues, et le réacheminement contingent en fait souvent partie. \citet{chopra2004} insistent sur la diversité et l'interdépendance des risques, qui interdisent une réponse unique. \citet{sheffirice2005} opposent la redondance, simple coût tant qu'aucune crise ne survient, à la flexibilité, qui procure un avantage même en temps normal.
+
+Les travaux quantitatifs précisent le rôle de chaque levier. Pour \citet{lucker2019}, le stock agit en prévention et la capacité de réserve en réaction ; leurs niveaux optimaux dépendent du type de produit et de chaîne. Le stock de sécurité a également été étudié comme levier de résilience dans la chaîne logistique hospitalière, face aux pics d'activité saisonniers \citep{rahiel2025esd}. \citet{hosseini2019ijpe} combinent stratégies proactives et réactives dans le choix des fournisseurs et la répartition des commandes. \citet{ivanov2016tre} comparent plusieurs configurations proactives et plusieurs politiques de rétablissement sur le niveau de service et les coûts. Face à une perturbation longue comme la pandémie de COVID-19, \citet{ivanovdolgui2021ijpe} concluent que ce sont les capacités d'adaptation qui pèsent le plus.
+
+La dimension économique traverse ces travaux. \citet{aldrighetti2021} recensent les coûts des investissements proactifs et du rétablissement dans les modèles de conception de réseaux. \citet{klibi2012ijpe} montrent, dans un problème de conception, que la qualité avec laquelle le modèle anticipe la réponse opérationnelle des utilisateurs pèse fortement sur le résultat, et soulignent que ces mécanismes de réponse ont été peu modélisés.
+
+Ces travaux établissent un répertoire de décisions : stock, approvisionnement de secours, réacheminement, capacité, allocation de la demande. En revanche, les décisions y sont le plus souvent fixées à l'avance, par optimisation ou par analyse de cas. Leur déclenchement au fil de la crise, avec les délais de détection, de décision et de mise en œuvre d'un gestionnaire réel, reste peu modélisé, de même que la comparaison de plusieurs comportements de gestion face à un même aléa. Le gestionnaire simulé et les profils de gestion du bloc~1 répondent à ce manque.
+
+% ---------------------------------------------------------------------
+\subsection{Simulation de perturbations et de rétablissement}
+\label{sec:ea-simulation}
+
+La simulation s'est imposée pour étudier la propagation des perturbations dans les réseaux, appelée effet domino (\textit{ripple effect}). \citet{schmitt2012} simulent un réseau réel de produits de grande consommation pour comparer les risques d'interruption de l'offre et de la demande et l'effet du placement des stocks sur plusieurs échelons. \citet{ivanov2017} présente un modèle de simulation d'une chaîne multi-échelons soumise à des pertes de capacité, et souligne que la simulation comble des angles morts de l'optimisation. Appliquée à la COVID-19, la même approche fait ressortir le délai d'approvisionnement, la vitesse de propagation et la durée des fermetures en amont et en aval comme facteurs de l'impact \citep{ivanov2020}. La crise ne s'arrête pas non plus à la réouverture des sites : retards et arriérés persistent, et appellent des politiques de reprise propres à cette période \citep{ivanov2019cie}.
+
+Sur le plan méthodologique, \citet{macdonald2018} associent plan d'expériences et simulation à événements discrets pour bâtir la théorie, en faisant varier l'intervalle entre chocs, la connectivité et les stocks tampons. \citet{kost2024} suivent la même démarche, avec un plan factoriel complet, pour des ruptures simultanées de l'offre et de la demande sur une chaîne multi-échelons. La structure du réseau compte aussi : \citet{kim2015} distinguent la défaillance d'un site de la perturbation du réseau, et \citet{li2020} montrent qu'un ensemble de caractéristiques du réseau décrit mieux la résilience que son seul type.
+
+Les scénarios eux-mêmes peuvent être générés de façon systématique. \citet{klibi2012ejor} proposent une méthode en trois temps (aléas et vulnérabilités, occurrence, conséquences) qui produit par tirage aléatoire des scénarios plausibles, au service de la conception du réseau. Les jumeaux numériques de chaîne logistique prolongent cette logique en représentant l'état du réseau en continu \citep{ivanovdolgui2021ppc} ; \citet{ivanov2023} en fait un outil de test de résistance qui combine stratégies proactives et réactives. Le cadre MARE couvre les quatre étapes de la gestion d'une perturbation (surveiller, évaluer, rétablir, évaluer le rétablissement) et compare la restauration obtenue par plusieurs stratégies de rétablissement \citep{ramzy2022}. Enfin, ISOMORPH est le premier jumeau numérique public d'un réseau logistique multi-échelons, dont la dynamique est entièrement décrite et dont les paramètres sont configurables \citep{zhang2026isomorph}. Il fournit des trajectoires de référence pour la prévision ; la commande en boucle fermée, c'est-à-dire une décision qui réagit à l'état du réseau, y figure parmi les extensions envisagées.
+
+Ces simulateurs font ressortir ce qui aggrave ou atténue une crise. Mais ils sont conçus pour étudier un réseau ou un cas, et non pour produire une base de crises comparables. Les stratégies y sont fixées par le scénario, et aucun des travaux examinés ne rejoue systématiquement un même aléa sans réaction puis avec plusieurs comportements de gestion. Le bloc~1, construit sur ISOMORPH, comble ce manque.
+
+% ---------------------------------------------------------------------
+\subsection{Réseaux bayésiens causaux en gestion de la chaîne logistique}
+\label{sec:ea-rb}
+
+Les réseaux bayésiens sont devenus un outil privilégié pour représenter les dépendances entre risques, stratégies et conséquences. La revue de \citet{hosseiniivanov2020} en souligne trois atouts : l'inférence dans les deux sens, de la cause vers l'effet pour simuler une perturbation, et de l'effet vers la cause pour savoir quels leviers renforcer ; la combinaison des connaissances d'experts et des données ; et la capacité à fonctionner avec peu de données. \citet{garvey2015} modélisent la propagation des risques en tenant compte de la structure du réseau. \citet{ojha2018} suivent la propagation en cascade dans des systèmes multi-échelons et en tirent des indices d'exposition au risque et de résilience. \citet{hosseiniivanov2022aor} fondent une mesure de résilience sur la vulnérabilité et la capacité de récupération des fournisseurs. La question de la décision est abordée par \citet{qazi2018}, qui couplent réseau bayésien et utilité espérée pour choisir des stratégies d'atténuation. Les probabilités de leur modèle sont recueillies auprès des acteurs de l'entreprise, par entretiens et groupes de travail. Une couche probabiliste amont a également été proposée pour modéliser la résilience d'un réseau sous perturbations sévères \citep{rahiel2026codit}.
+
+La structure de ces réseaux est le plus souvent fixée par des experts. Elle peut aussi être apprise sur des données, soit en maximisant un score qui récompense l'ajustement et pénalise la complexité, comme le critère de \citet{schwarz1978}, soit par des tests d'indépendance \citep{koller2009, hosseiniivanov2020}. \citet{heckerman1995} montrent comment combiner ces deux sources, la connaissance a priori du domaine et les données statistiques, dans l'apprentissage d'un même réseau. Pour qu'un tel modèle préconise une décision, encore faut-il que l'effet de cette décision soit identifiable. Au sens de \citet{pearl2009}, une décision est une intervention : sa conséquence ne se lit pas dans une simple corrélation observée, car le gestionnaire réagit d'autant plus fort que la crise est grave.
+
+Or les données nécessaires manquent. \citet{hosseiniivanov2020} relèvent que les perturbations majeures sont rares, si bien que les données disponibles sont insuffisantes pour quantifier la résilience. Les travaux d'apprentissage reposent alors sur des données industrielles internes, comme les séries temporelles de Ford utilisées par \citet{do2024} pour prévoir les retards de livraison. Ces historiques ne sont pas publics et ne contiennent ni l'étiquette de la décision prise ni le contrefactuel, c'est-à-dire ce qui se serait passé sans elle : chaque crise n'est vécue qu'une fois, avec une seule réponse. Le bloc~3 apprend donc son réseau bayésien sur la base contrefactuelle du bloc~1, en combinant arcs interdits fixés par la connaissance du domaine et apprentissage par score.
+
+% ---------------------------------------------------------------------
+\subsection{Lacune de recherche et positionnement}
+\label{sec:ea-lacune}
+
+Les quatre courants examinés sont solides, mais ils restent cloisonnés. La mesure de la résilience suppose une courbe déjà disponible. Les stratégies sont le plus souvent évaluées de façon statique, sans gestionnaire qui détecte, tarde, décide puis relâche ses mesures. Les simulateurs étudient un réseau ou un cas plutôt qu'une population de crises comparables. Enfin, les modèles causaux manquent d'exemples étiquetés reliant perturbation, décision et trajectoire. Le tableau~\ref{tab:synthese} résume ces constats et la réponse apportée par chaque bloc.
+
+\begin{table*}[htbp]
+\caption{Synthèse des courants de la littérature, de leurs limites pour la préconisation de décisions et de la réponse apportée par ce travail.}
+\label{tab:synthese}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{1.9cm}>{\raggedright\arraybackslash}p{3.3cm}LLL@{}}
+\toprule
+\textbf{Courant} & \textbf{Travaux représentatifs} & \textbf{Apport} & \textbf{Limite pour la préconisation} & \textbf{Réponse de ce travail} \\
+\midrule
+Mesure de la résilience
+  & \citealp{bruneau2003}; \citealp{sheffirice2005}; \citealp{henry2012}; \citealp{spiegler2012}; \citealp{behzadi2020}; \citealp{rahiel2026in4pl}
+  & Courbe de performance, triangle de résilience, indicateurs, fonction explicite de la trajectoire
+  & Suppose une courbe déjà observée ; ne dit pas comment produire des courbes comparables en nombre
+  & Bloc 2 : ajustement de la fonction à sept paramètres sur chaque trajectoire simulée, six indicateurs \\
+\addlinespace
+Atténuation et contingence
+  & \citealp{tang2006}; \citealp{tomlin2006}; \citealp{lucker2019}; \citealp{ivanov2016tre}; \citealp{aldrighetti2021}
+  & Répertoire de leviers (stock, secours, réacheminement, capacité, allocation) et de leurs coûts
+  & Décisions fixées à l'avance ; délais de détection et de réaction peu modélisés
+  & Bloc 1 : gestionnaire simulé qui ne voit que la performance, avec délais et trois profils de gestion \\
+\addlinespace
+Simulation des perturbations
+  & \citealp{schmitt2012}; \citealp{ivanov2017}; \citealp{macdonald2018}; \citealp{klibi2012ejor}; \citealp{ramzy2022}; \citealp{zhang2026isomorph}
+  & Propagation des ruptures, facteurs aggravants, génération de scénarios, comparaison de stratégies de rétablissement
+  & Étude d'un réseau ou d'un cas ; pas de base de crises comparables ni de contrefactuels systématiques
+  & Bloc 1 : chaque crise rejouée à l'identique sans réaction puis sous chaque profil \\
+\addlinespace
+Réseaux bayésiens causaux
+  & \citealp{garvey2015}; \citealp{ojha2018}; \citealp{qazi2018}; \citealp{hosseiniivanov2020}; \citealp{hosseiniivanov2022aor}
+  & Propagation des risques, inférence dans les deux sens, choix de stratégies par utilité espérée
+  & Structures et probabilités fixées par des experts ou apprises sur des données rares, sans étiquette de décision ni contrefactuel
+  & Bloc 3 : réseau appris sur la base contrefactuelle, avec arcs interdits, pour diagnostiquer, pronostiquer et préconiser \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+Il en ressort qu'aucune base publique, à notre connaissance, ne relie pour un grand nombre de crises la perturbation subie, la décision prise et la trajectoire de performance qui en découle. C'est cette base qui manque pour passer de la mesure de la résilience à la préconisation de décisions. Ce travail la construit par simulation, selon quatre principes qui répondent directement aux limites relevées :
+\begin{enumerate}
+  \item des perturbations maîtrisées et étiquetées, dont la nature, la cible, la date, la durée et la sévérité sont connues ;
+  \item des décisions prises en cours de crise par un gestionnaire simulé qui ne voit que la performance, avec des délais de détection, de décision et de mise en œuvre, selon plusieurs profils de comportement ;
+  \item des contrefactuels, chaque crise étant rejouée à l'identique sans réaction puis avec chaque profil, pour isoler l'effet des décisions ;
+  \item des trajectoires résumées par une fonction de résilience paramétrique, qui servent à apprendre un modèle causal de préconisation.
+\end{enumerate}
+La figure~1 % TODO : remplacer par \ref{fig:demarche} au rapatriement de la section 1
+situe ces principes dans la démarche d'ensemble.

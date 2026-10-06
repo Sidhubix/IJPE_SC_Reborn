@@ -1,0 +1,54 @@
+%% Article SC-Reborn pour International Journal of Production Economics
+%% Fichier principal, fondé sur cas-sc-template.tex (Elsevier CAS, une colonne).
+%% État actuel : seule la section 2 (état de l'art) est rapatriée dans ce dépôt.
+%% Les autres sections seront ajoutées dans le dossier sections/.
+
+\documentclass[a4paper,fleqn]{cas-sc}
+
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage[authoryear,longnamesfirst]{natbib}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds,calc,patterns}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+
+\begin{document}
+\let\WriteBookmarks\relax
+\def\floatpagepagefraction{1}
+\def\textpagefraction{.001}
+
+\shorttitle{Résilience des réseaux logistiques : simuler, mesurer, apprendre}
+\shortauthors{Auteurs anonymisés}
+
+\title [mode = title]{Préconiser des décisions de remédiation à partir de crises contrefactuelles simulées : courbe de résilience et réseau bayésien causal}
+
+\author[1]{Auteurs anonymisés pour l'évaluation}
+
+\affiliation[1]{organization={Anonymisé},
+            country={France}}
+
+\begin{abstract}
+[Le résumé sera rapatrié avec le reste de l'article.]
+\end{abstract}
+
+\begin{keywords}
+Résilience \sep Chaîne logistique \sep Simulation contrefactuelle \sep Réseau bayésien causal
+\end{keywords}
+
+\maketitle
+
+% Section 1 : Introduction (à rapatrier)
+\setcounter{section}{1} % provisoire : numérote l état de l art en section 2
+
+\input{sections/02_etat_de_lart}
+
+% Sections 3 à 8 (à rapatrier)
+
+\bibliographystyle{cas-model2-names}
+\bibliography{references}
+
+\end{document}
