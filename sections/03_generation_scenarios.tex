@@ -42,12 +42,13 @@ Deux réseaux servent de référence (tableau~\ref{tab:d2}). Le réseau paramét
 
 Le réseau ISOMORPH reprend la topologie d'origine (Fig.~\ref{fig:d2}) : treize villes reliées par seize liaisons, avec un hub et cinq échelons intermédiaires entre les sources et le client. Le fichier d'origine ne fixant pas toutes les grandeurs nécessaires, trois hypothèses complètent sa description. La capacité de chaque liaison est tirée à plus ou moins 10 \% autour de sa valeur d'origine. La capacité de production de chaque source est fixée à 0,8 fois la capacité cumulée de ses liaisons sortantes : à 1,0, la production ne pourrait jamais constituer un goulot et le report de charge vers les sites de production sains serait sans effet. Le dernier kilomètre est enfin supposé illimité ; les deux derniers sites de stockage avant le client n'ont alors ni capacité propre ni liaison sortante limitée, et échappent aux leviers d'expédition.
 
-\begin{figure*}[htbp]
+\begin{figure}[!ht]
 \centering
 \fbox{\parbox{0.92\textwidth}{\footnotesize [FIGURE À INSÉRER. Source : Isomorph-Reborn, onglet « Générateur de scénarios », section Réseau en tête de l'onglet, choisir « Réseau ISOMORPH », puis capturer le schéma par échelons. Contenu attendu : San Francisco, St. Louis et Orlando vers Nashville (hub), puis Atlanta, puis Chicago, Charlotte et Memphis, puis Columbus et Richmond, puis Philadelphia et Baltimore, puis New York. À mettre en évidence (couleur ou trait épais) : les points de passage obligés, Nashville, Atlanta et la liaison qui les relie. Pour la version finale, une figure redessinée en vectoriel est préférable à une capture.]}}
 \caption{Réseau ISOMORPH d'origine représenté par échelons, des trois sources au client.}
 \label{fig:d2}
-\end{figure*}
+\end{figure}
+\FloatBarrier
 
 Dans les deux réseaux, la demande du client distingue des articles critiques, dont la part varie selon les scénarios, et des articles ordinaires ; elle fluctue d'un jour à l'autre même en l'absence d'incident.
 
@@ -202,12 +203,13 @@ Premiers leviers essayés & Reroutage, transporteur d'appoint & Déstockage, pr�
 
 Chaque crise est jouée quatre fois : sans aucune réaction, puis sous chacun des trois profils. Les quatre versions partagent exactement le même réseau, la même perturbation et les mêmes fluctuations de demande ; dans la représentation temporelle, elles partent aussi du même état de stock, issu d'une pré-chauffe commune. Toute différence de trajectoire entre elles est donc attribuable au seul comportement de gestion, et la version sans réaction indique ce qu'aurait été la crise en l'absence de toute remédiation (Fig.~\ref{fig:d3}). Au sens de Pearl \citep{pearl2009}, le profil constitue une intervention : il est assigné indépendamment de la situation, alors que les leviers effectivement mobilisés dépendent de ce que le gestionnaire perçoit.
 
-\begin{figure*}[htbp]
+\begin{figure}[!ht]
 \centering
 \fbox{\parbox{0.92\textwidth}{\footnotesize [FIGURE À INSÉRER. Source : Isomorph-Reborn, lot A (fichier \texttt{hypotheses\_lot\_A\_isomorph\_tension75.json}, 2 000 scénarios, graine 42), visualisation des courbes de résilience, scénario S0366, les quatre branches superposées (aucune décision, réactif, prudent, tardif). Contenu attendu : indicateur de performance journalier en ordonnée, jours en abscisse ; marquer le début et la fin de la perturbation par deux traits verticaux ; si possible, marquer par un symbole le jour de détection et les décisions de chaque profil. Valeurs de contrôle (IPC) : 1,47 sans réaction, 0,29 réactif, 0,66 prudent, 0,93 tardif. Variante : Claude peut tracer la figure à partir du fichier \texttt{ip\_timeseries.csv} du lot A.]}}
 \caption{Une même crise jouée sous les quatre politiques : fermeture de l'entrepôt d'Atlanta pendant 21 jours (base principale, scénario S0366).}
 \label{fig:d3}
-\end{figure*}
+\end{figure}
+\FloatBarrier
 
 \subsection{Plan d'expériences et régimes de tension}
 \label{sec:3.7}
