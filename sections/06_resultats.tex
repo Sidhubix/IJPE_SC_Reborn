@@ -65,13 +65,10 @@ Trois constats s'en dégagent. Le premier est la domination de la réactivité. 
 
 Le deuxième constat porte sur le mécanisme. La performance minimale est presque identique d'un profil à l'autre, autour de 0,87 : aucune politique n'empêche la chute. La différence tient à sa durée (Fig.~\ref{fig:d5}). Le retour à la normale intervient au quatrième jour pour le profil réactif, contre le quatorzième en l'absence de réaction. La perte cumulée du profil réactif devient ainsi indépendante de la durée du choc (corrélation de rangs de Spearman de 0,01), alors qu'elle en dépend nettement sans réaction (0,48), sous le profil tardif (0,37) et sous le profil prudent (0,25). Dans la plage étudiée, la sévérité pèse peu sur la perte (0,08) : à ce niveau de tension, presque toutes les perturbations sont des ruptures franches, et c'est leur persistance, non leur intensité, qui fait la crise.
 
-\begin{figure}[!ht]
-\centering
+\begin{center}
 \includegraphics[width=\textwidth]{figures/Fig5_trajectoire_mediane.pdf}
-\caption{Trajectoire médiane de la performance selon la politique de gestion, sur les 2 000 crises de la base principale, recalées sur le début de la perturbation. Les bandes indiquent l'écart entre premier et troisième quartiles, sans réaction et sous le profil réactif.}
-\label{fig:d5}
-\end{figure}
-\FloatBarrier
+\captionof{figure}{Trajectoire médiane de la performance selon la politique de gestion, sur les 2 000 crises de la base principale, recalées sur le début de la perturbation. Les bandes indiquent l'écart entre premier et troisième quartiles, sans réaction et sous le profil réactif.}\label{fig:d5}
+\end{center}
 
 Le troisième constat concerne le choix des leviers : le profil tardif n'engage que des leviers de demande, faute de pouvoir escalader au-delà de ses deux premiers choix pendant la crise, le profil prudent s'appuie surtout sur les stocks et la capacité additionnelle, le profil réactif sur le reroutage et la capacité. Leur efficacité dépend de la nature de la perturbation (tableau~\ref{tab:d13}).
 
@@ -103,13 +100,10 @@ Pour vérifier que ces résultats ne tiennent pas à la seule topologie d'ISOMOR
 
 Le réseau est appris sur 1 600 scénarios, soit 6 400 versions de crise, et évalué sur les 400 restants (section~\ref{sec:5.4}). La structure obtenue (Fig.~\ref{fig:d6}) compte 41 arcs, sans aucun arc contraire à l'ordre des paliers, et retrouve le mécanisme principal de la section~\ref{sec:6.2} : la perte cumulée dépend directement de la politique, de la profondeur $h$ et de la durée $d$ du palier dégradé, et cette durée dépend à son tour de la politique, de la durée de la perturbation et du délai de réaction. La politique agit donc sur la durée de la crise plutôt que sur sa profondeur. La nature de la perturbation conditionne les familles de leviers mobilisées ; la part des articles critiques reste isolée dans la plage étudiée.
 
-\begin{figure}[!ht]
-\centering
+\begin{center}
 \fbox{\parbox{0.92\textwidth}{\footnotesize [FIGURE À INSÉRER. Source : BayesArtist, apprentissage du fichier \texttt{bayesartist\_apprentissage\_lotA.csv} avec les contraintes \texttt{bayesartist\_contraintes\_isomorph.json} (Greedy Hill Climbing, score BIC, lissage de Laplace), puis « Appliquer au canevas » avec paliers colorés. Contenu attendu : 20 nœuds et 41 arcs, disposés en cinq colonnes de gauche à droite (contexte, politique, réponse, mécanisme, résilience). Pour la lisibilité, mettre en évidence le chemin principal : profil vers $d$ (durée du palier dégradé) et vers IPC ; durée de la perturbation et délai de réaction vers $d$ ; $h$ et $d$ vers IPC. Si la capture reste trop dense, envoyer à Claude le fichier .bif pour une version redessinée.]}}
-\caption{Réseau bayésien appris sous contraintes, variables colorées par palier de l'ordre temporel d'une crise.}
-\label{fig:d6}
-\end{figure}
-\FloatBarrier
+\captionof{figure}{Réseau bayésien appris sous contraintes, variables colorées par palier de l'ordre temporel d'une crise.}\label{fig:d6}
+\end{center}
 
 \begin{table*}[htbp]
 \caption{Pronostic de la classe de perte cumulée sur les crises de test.}
@@ -159,13 +153,10 @@ Deux crises de même nature illustrent l'usage du réseau. Dans la première, un
 
 Dans la seconde, un site de stockage redondé est fermé pour une courte durée. La probabilité de forte perte tombe à 0,30 sans réaction, 0,22 sous le profil tardif et 0,20 sous le profil prudent. Avec $\theta$ = 0,8, le profil prudent atteint l'objectif avec une probabilité de 0,80 et devient la préconisation : face à un choc bref sur un site doublé, une réaction fondée sur le déstockage suffit, et mobiliser le reroutage et la capacité additionnelle n'apporterait qu'un gain marginal.
 
-\begin{figure}[!ht]
-\centering
+\begin{center}
 \fbox{\parbox{0.92\textwidth}{\footnotesize [FIGURE À INSÉRER. Source : BayesArtist, réseau appris de la figure~\ref{fig:d6}, mode inférence. Évidences à poser : nature = \texttt{fermeture\_entrepot}, cible = \texttt{passage\_oblige}, duree = fort. Puis fixer successivement profil = none, tardif, prudent, reactif, et capturer la distribution du nœud IPC à chaque fois. Valeurs de contrôle pour la classe « fort » : 0,69, 0,55, 0,44 et 0,01. Présentation conseillée : les quatre captures assemblées côte à côte, ou une seule capture avec le profil réactif et les évidences visibles. Variante : Claude peut produire un diagramme en barres empilées des quatre distributions.]}}
-\caption{Pronostic de la perte cumulée selon la politique, pour la fermeture longue d'un site situé sur un point de passage obligé.}
-\label{fig:d7}
-\end{figure}
-\FloatBarrier
+\captionof{figure}{Pronostic de la perte cumulée selon la politique, pour la fermeture longue d'un site situé sur un point de passage obligé.}\label{fig:d7}
+\end{center}
 
 Le diagnostic éclaire le cas inverse, celui d'une crise à forte perte gérée par un profil prudent. Le réseau y associe une perturbation longue, avec une probabilité de 0,39 contre 0,33 a priori, un recours au déstockage presque certain (0,95) et une escalade jusqu'à trois leviers ou plus (0,40 contre 0,23 a priori). Il désigne ainsi une crise trop longue pour la politique choisie : le gestionnaire a escaladé, mais à partir de leviers de stock dont l'effet s'épuise, sans atteindre à temps le reroutage. Ce diagnostic oriente l'action corrective vers la politique, plus réactive ou dotée d'un autre ordre de leviers, plutôt que vers le réseau.
 
@@ -174,13 +165,10 @@ Le diagnostic éclaire le cas inverse, celui d'une crise à forte perte gérée 
 
 La représentation temporelle permet d'étudier le rôle des stocks, que la base principale neutralise. Sur le réseau ISOMORPH, avec ses délais de trajet d'origine, 60 crises ont été simulées pour chaque nature de perturbation et chaque couverture, sans réaction du gestionnaire, et l'on a compté celles qui produisent une baisse de service visible (Fig.~\ref{fig:d8} ; valeurs détaillées au tableau~S4 du matériel supplémentaire). La représentation par flux sert de référence.
 
-\begin{figure}[!ht]
-\centering
+\begin{center}
 \includegraphics[width=\textwidth]{figures/Fig8_couverture_stock.pdf}
-\caption{Nombre de crises visibles sur 60 selon la couverture de stock, par nature de perturbation (réseau ISOMORPH, sans réaction). Les symboles creux, à gauche, donnent la référence de la représentation par flux.}
-\label{fig:d8}
-\end{figure}
-\FloatBarrier
+\captionof{figure}{Nombre de crises visibles sur 60 selon la couverture de stock, par nature de perturbation (réseau ISOMORPH, sans réaction). Les symboles creux, à gauche, donnent la référence de la représentation par flux.}\label{fig:d8}
+\end{center}
 
 Trois comportements se dégagent. Pour les ruptures de distribution, coupure de lien, fermeture d'un site de stockage et congestion, la couverture agit comme un levier de robustesse progressif : plus elle est faible, plus les crises visibles sont nombreuses, de 11 à 43 sur 60 pour une coupure de lien et de 27 à 59 pour une congestion. La frontière entre robustesse et résilience évoquée en section 4.4 se déplace donc de manière contrôlée avec le niveau de stock. Les pannes fournisseur sont au contraire absorbées dès que la couverture atteint un quart de jour, y compris pour des pannes de 15 à 60 jours à la couverture par défaut : la calibration de la demande borne le manque à servir pendant une panne, que quelques jours de stock suffisent à compenser. Enfin, le pic de demande est mieux absorbé sans stocks qu'avec : dans la représentation par flux, toute marge de capacité sert instantanément le surcroît de demande, alors qu'avec des délais, ce surcroît doit d'abord être prélevé sur des stocks dimensionnés sur le débit nominal, que le recomplètement ne reconstitue qu'après un délai.
 
